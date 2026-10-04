@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login | PlantFlow AI</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 15% 20%, rgba(105,240,155,.13), transparent 28%),
+                radial-gradient(circle at 85% 80%, rgba(35,120,65,.15), transparent 30%),
+                #06150d;
+            color: #f1fff5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* BACKGROUND DECORATION */
+
+        .leaf {
+            position: fixed;
+            font-size: 80px;
+            opacity: .07;
+            pointer-events: none;
+        }
+
+        .leaf.one {
+            top: 8%;
+            left: 7%;
+            transform: rotate(-25deg);
+        }
+
+        .leaf.two {
+            right: 8%;
+            top: 15%;
+            transform: rotate(30deg);
+        }
+
+        .leaf.three {
+            bottom: 8%;
+            left: 12%;
+            transform: rotate(20deg);
+        }
+
+        .leaf.four {
+            bottom: 10%;
+            right: 12%;
+            transform: rotate(-20deg);
+        }
+
+        /* CONTAINER */
+
+        .login-container {
+            width: 900px;
+            max-width: 92%;
+            min-height: 560px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border: 1px solid rgba(105,240,155,.15);
+            border-radius: 28px;
+            overflow: hidden;
+            background: rgba(12,34,20,.88);
+            box-shadow: 0 30px 100px rgba(0,0,0,.45);
+            backdrop-filter: blur(20px);
+        }
+
+        /* LEFT */
+
+        .welcome-section {
+            padding: 55px;
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(105,240,155,.12),
+                    rgba(7,27,15,.4)
+                );
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .logo {
+            color: #69f09b;
+            font-size: 23px;
+            font-weight: bold;
+            margin-bottom: 70px;
+        }
+
+        .welcome-section h1 {
+            font-size: 43px;
+            line-height: 1.1;
+            margin-bottom: 18px;
+        }
+
+        .welcome-section h1 span {
+            color: #69f09b;
+        }
+
+        .welcome-section p {
+            color: #91a497;
+            line-height: 1.7;
+            max-width: 350px;
+        }
+
+        .features {
+            margin-top: 35px;
+            display: grid;
+            gap: 14px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #b6c7bb;
+            font-size: 13px;
+        }
+
+        .feature-icon {
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(105,240,155,.08);
+            border: 1px solid rgba(105,240,155,.12);
+            border-radius: 10px;
+        }
+
+        /* RIGHT */
+
+        .form-section {
+            padding: 55px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-section h2 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .form-subtitle {
+            color: #829489;
+            font-size: 13px;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 19px;
+        }
+
+        .input-group label {
+            display: block;
+            color: #a7b8ad;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper span {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: .65;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 14px 45px;
+            border-radius: 11px;
+            border: 1px solid #284936;
+            background: #081b10;
+            color: white;
+            outline: none;
+            transition: .3s;
+        }
+
+        .input-wrapper input:focus {
+            border-color: #69f09b;
+            box-shadow: 0 0 0 3px rgba(105,240,155,.05);
+        }
+
+        .password-eye {
+            position: absolute;
+            right: 14px;
+            left: auto !important;
+            cursor: pointer;
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 8px 0 23px;
+            font-size: 12px;
+        }
+
+        .remember {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            color: #829489;
+        }
+
+        .remember input {
+            accent-color: #69f09b;
+        }
+
+        .forgot {
+            color: #69f09b;
+            text-decoration: none;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 11px;
+            background: #69f09b;
+            color: #06150d;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(105,240,155,.18);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 25px 0;
+            color: #506158;
+            font-size: 11px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #233a2b;
+        }
+
+        .register {
+            text-align: center;
+            color: #7f9185;
+            font-size: 12px;
+        }
+
+        .register a {
+            color: #69f09b;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .secure {
+            text-align: center;
+            margin-top: 25px;
+            color: #536359;
+            font-size: 10px;
+        }
+
+        /* RESPONSIVE */
+
+        @media(max-width: 750px) {
+
+            body {
+                overflow: auto;
+                padding: 25px 0;
+            }
+
+            .login-container {
+                grid-template-columns: 1fr;
+            }
+
+            .welcome-section {
+                padding: 35px;
+            }
+
+            .logo {
+                margin-bottom: 35px;
+            }
+
+            .welcome-section h1 {
+                font-size: 32px;
+            }
+
+            .features {
+                margin-top: 25px;
+            }
+
+            .form-section {
+                padding: 35px;
+            }
+        }
+
+        @media(max-width: 450px) {
+
+            .login-container {
+                max-width: 94%;
+            }
+
+            .welcome-section,
+            .form-section {
+                padding: 28px;
+            }
+
+            .welcome-section h1 {
+                font-size: 28px;
+            }
+
+            .options {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <!-- DECORATIVE LEAVES -->
+
+    <div class="leaf one">🌿</div>
+    <div class="leaf two">🍃</div>
+    <div class="leaf three">🌱</div>
+    <div class="leaf four">🍀</div>
+
+
+    <div class="login-container">
+
+        <!-- WELCOME -->
+
+        <section class="welcome-section">
+
+            <div class="logo">
+                🌱 PlantFlow AI
+            </div>
+
+            <h1>
+                Welcome<br>
+                <span>Back.</span>
+            </h1>
+
+            <p>
+                Manage your plants smarter, optimize water usage
+                and build healthier green spaces with PlantFlow AI.
+            </p>
+
+
+            <div class="features">
+
+                <div class="feature">
+                    <div class="feature-icon">💧</div>
+                    Smart irrigation planning
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">🌿</div>
+                    Personalized plant management
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">📊</div>
+                    Water usage analytics
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- LOGIN FORM -->
+
+        <section class="form-section">
+
+            <h2>Sign in</h2>
+
+            <p class="form-subtitle">
+                Enter your details to access your plant dashboard.
+            </p>
+
+
+            <form onsubmit="loginUser(event)">
+
+                <!-- EMAIL -->
+
+                <div class="input-group">
+
+                    <label>EMAIL ADDRESS</label>
+
+                    <div class="input-wrapper">
+
+                        <span>✉️</span>
+
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="you@example.com"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="input-group">
+
+                    <label>PASSWORD</label>
+
+                    <div class="input-wrapper">
+
+                        <span>🔒</span>
+
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="Enter your password"
+                            required
+                        >
+
+                        <span
+                            class="password-eye"
+                            onclick="togglePassword()"
+                            id="eye">
+                            👁
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- OPTIONS -->
+
+                <div class="options">
+
+                    <label class="remember">
+
+                        <input type="checkbox">
+
+                        Remember me
+
+                    </label>
+
+                    <a href="#" class="forgot">
+                        Forgot password?
+                    </a>
+
+                </div>
+
+
+                <button class="login-btn" type="submit">
+                    Sign In →
+                </button>
+
+            </form>
+
+
+            <div class="divider">
+                OR
+            </div>
+
+
+            <div class="register">
+
+                Don't have an account?
+
+                <a href="register.html">
+                    Create account
+                </a>
+
+            </div>
+
+
+            <div class="secure">
+                🔐 Secure PlantFlow AI access
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <script>
+
+        function togglePassword() {
+
+            const password =
+                document.getElementById("password");
+
+            const eye =
+                document.getElementById("eye");
+
+            if (password.type === "password") {
+
+                password.type = "text";
+                eye.textContent = "🙈";
+
+            } else {
+
+                password.type = "password";
+                eye.textContent = "👁";
+
+            }
+
+        }
+
+
+        function loginUser(event) {
+
+            event.preventDefault();
+
+            const email =
+                document.getElementById("email").value;
+
+            const password =
+                document.getElementById("password").value;
+
+
+            if (email && password) {
+
+                alert(
+                    "🌱 Login successful!\n\n" +
+                    "Welcome to PlantFlow AI."
+                );
+
+                window.location.href =
+                    "index.html";
+
+                    
+            }
+
+        }
+
+    </script>
+
+</body>
+</html>
+<nav>
+
+            

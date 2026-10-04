@@ -1,0 +1,780 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Center | PlantFlow AI</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        body {
+            background: #06150d;
+            color: #ecfff3;
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+        header {
+            height: 72px;
+            padding: 0 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(105, 240, 155, 0.12);
+            background: rgba(6, 21, 13, 0.92);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            color: #69f09b;
+            font-size: 21px;
+            font-weight: 700;
+        }
+
+        nav {
+            display: flex;
+            gap: 24px;
+        }
+
+        nav a {
+            color: #9eb8a7;
+            text-decoration: none;
+            font-size: 14px;
+            transition: .3s;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: #69f09b;
+        }
+
+        .profile {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: #173d26;
+            color: #69f09b;
+            font-weight: 700;
+        }
+
+        /* HERO */
+        .hero {
+            text-align: center;
+            padding: 65px 20px 35px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 30px;
+            background: rgba(105, 240, 155, .08);
+            border: 1px solid rgba(105, 240, 155, .2);
+            color: #69f09b;
+            font-size: 12px;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        .hero h1 span {
+            color: #69f09b;
+        }
+
+        .hero p {
+            color: #9eb8a7;
+            max-width: 650px;
+            margin: auto;
+            line-height: 1.7;
+        }
+
+        /* CONTAINER */
+        .container {
+            width: 88%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        /* ASSISTANT */
+        .assistant {
+            display: grid;
+            grid-template-columns: 1.4fr .8fr;
+            gap: 25px;
+            margin: 25px 0 45px;
+        }
+
+        .chat-box,
+        .quick-help {
+            background: rgba(14, 39, 24, .8);
+            border: 1px solid rgba(105, 240, 155, .13);
+            border-radius: 22px;
+            padding: 25px;
+            box-shadow: 0 15px 45px rgba(0,0,0,.2);
+        }
+
+        .chat-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid rgba(255,255,255,.07);
+        }
+
+        .bot-icon {
+            width: 44px;
+            height: 44px;
+            display: grid;
+            place-items: center;
+            border-radius: 14px;
+            background: #163d25;
+            font-size: 22px;
+        }
+
+        .chat-header h3 {
+            font-size: 17px;
+        }
+
+        .online {
+            color: #69f09b;
+            font-size: 12px;
+            margin-top: 3px;
+        }
+
+        .messages {
+            height: 270px;
+            overflow-y: auto;
+            padding: 20px 5px;
+        }
+
+        .message {
+            max-width: 78%;
+            padding: 13px 16px;
+            border-radius: 15px;
+            margin-bottom: 14px;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        .bot {
+            background: #102c1b;
+            color: #d7f5df;
+        }
+
+        .user {
+            margin-left: auto;
+            background: #69f09b;
+            color: #06200e;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 10px;
+            border-top: 1px solid rgba(255,255,255,.07);
+            padding-top: 18px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 13px 15px;
+            border-radius: 12px;
+            border: 1px solid #244a31;
+            background: #091d11;
+            color: white;
+            outline: none;
+        }
+
+        .chat-input input:focus {
+            border-color: #69f09b;
+        }
+
+        .send-btn {
+            border: none;
+            background: #69f09b;
+            color: #06200e;
+            padding: 0 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* QUICK HELP */
+        .quick-help h3 {
+            margin-bottom: 18px;
+        }
+
+        .quick-item {
+            padding: 15px;
+            border-radius: 14px;
+            background: #0b2415;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .quick-item:hover {
+            transform: translateY(-3px);
+            border-color: #69f09b;
+            background: #102d1b;
+        }
+
+        .quick-item strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .quick-item span {
+            font-size: 12px;
+            color: #8da896;
+        }
+
+        /* SECTION */
+        .section-title {
+            margin-bottom: 20px;
+        }
+
+        .section-title h2 {
+            font-size: 25px;
+        }
+
+        .section-title p {
+            color: #829a8b;
+            margin-top: 6px;
+        }
+
+        /* HELP CARDS */
+        .help-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 50px;
+        }
+
+        .help-card {
+            padding: 23px;
+            background: #0d2417;
+            border: 1px solid rgba(105,240,155,.1);
+            border-radius: 18px;
+            transition: .3s;
+        }
+
+        .help-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(105,240,155,.4);
+        }
+
+        .help-icon {
+            font-size: 27px;
+            margin-bottom: 15px;
+        }
+
+        .help-card h3 {
+            margin-bottom: 8px;
+        }
+
+        .help-card p {
+            color: #8fa997;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* TIPS */
+        .tips {
+            background: linear-gradient(135deg, #0d2b18, #0b1d12);
+            border: 1px solid rgba(105,240,155,.15);
+            border-radius: 22px;
+            padding: 28px;
+            margin-bottom: 45px;
+        }
+
+        .tips-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .tip {
+            padding: 16px;
+            background: rgba(255,255,255,.03);
+            border-radius: 13px;
+            color: #b5cbbd;
+            font-size: 14px;
+        }
+
+        .tip span {
+            color: #69f09b;
+            margin-right: 8px;
+        }
+
+        /* CTA */
+        .cta {
+            text-align: center;
+            padding: 35px;
+            border-radius: 22px;
+            background: #102c1b;
+            margin-bottom: 50px;
+        }
+
+        .cta h2 {
+            margin-bottom: 10px;
+        }
+
+        .cta p {
+            color: #91a99a;
+            margin-bottom: 20px;
+        }
+
+        .cta button {
+            border: none;
+            padding: 13px 24px;
+            border-radius: 12px;
+            background: #69f09b;
+            color: #06200e;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #647b6c;
+            border-top: 1px solid rgba(255,255,255,.05);
+            font-size: 13px;
+        }
+
+        /* RESPONSIVE */
+        @media(max-width: 850px) {
+            nav {
+                display: none;
+            }
+
+            .assistant {
+                grid-template-columns: 1fr;
+            }
+
+            .help-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media(max-width: 550px) {
+            .hero h1 {
+                font-size: 31px;
+            }
+
+            .container {
+                width: 92%;
+            }
+
+            .help-grid,
+            .tips-list {
+                grid-template-columns: 1fr;
+            }
+
+            .chat-input {
+                flex-direction: column;
+            }
+
+            .send-btn {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🌱 PlantFlow AI</div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="plants.html">My Plants</a>
+        <a href="irrigation.html">Irrigation</a>
+        <a href="analytics.html">Analytics</a>
+        <a href="weather.html">Weather</a>
+        <a href="assistant.html">AI Assistant</a>
+        <a href="help.html" class="active">Help</a>
+        <a href="about.html" class="active">About</a>
+        <a href="contact.html" class="active">Contact</a>
+        <a href="notifications.html">🔔 Notifications</a>
+        <a href="settings.html">⚙️ Settings</a>
+    
+    </nav>
+
+    <div class="profile">S</div>
+</header>
+
+
+<section class="hero">
+    <div class="badge">🌿 SMART SUPPORT CENTER</div>
+
+    <h1>How Can <span>PlantFlow AI</span> Help?</h1>
+
+    <p>
+        Get instant answers about plant watering, irrigation planning,
+        water saving, analytics and plant management.
+    </p>
+</section>
+
+
+<div class="container">
+
+    <!-- SMART ASSISTANT -->
+    <section class="assistant">
+
+        <div class="chat-box">
+
+            <div class="chat-header">
+                <div class="bot-icon">🤖</div>
+
+                <div>
+                    <h3>PlantFlow Smart Assistant</h3>
+                    <div class="online">● Online • Frontend AI Assistant</div>
+                </div>
+            </div>
+
+            <div class="messages" id="messages">
+
+                <div class="message bot">
+                    👋 Hi! I'm your PlantFlow Assistant.
+                    Ask me about watering, plants, irrigation or water saving.
+                </div>
+
+                <div class="message bot">
+                    Example: <b>"How much water does a rose need?"</b>
+                </div>
+
+            </div>
+
+            <div class="chat-input">
+                <input
+                    type="text"
+                    id="userInput"
+                    placeholder="Ask about your plants..."
+                    onkeydown="handleKey(event)"
+                >
+
+                <button class="send-btn" onclick="sendMessage()">
+                    Send
+                </button>
+            </div>
+
+        </div>
+
+
+        <!-- QUICK HELP -->
+        <div class="quick-help">
+
+            <h3>⚡ Quick Help</h3>
+
+            <div class="quick-item" onclick="quickQuestion('How much water does a rose need?')">
+                <strong>🌹 Rose Watering</strong>
+                <span>Get watering guidance</span>
+            </div>
+
+            <div class="quick-item" onclick="quickQuestion('How can I save water?')">
+                <strong>💧 Save Water</strong>
+                <span>Smart conservation tips</span>
+            </div>
+
+            <div class="quick-item" onclick="quickQuestion('What does plant health mean?')">
+                <strong>🌿 Plant Health</strong>
+                <span>Understand health scores</span>
+            </div>
+
+            <div class="quick-item" onclick="quickQuestion('How does irrigation work?')">
+                <strong>⚙️ Irrigation</strong>
+                <span>Understand smart planning</span>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- HELP TOPICS -->
+    <div class="section-title">
+        <h2>Help Topics</h2>
+        <p>Everything you need to use PlantFlow AI effectively.</p>
+    </div>
+
+    <section class="help-grid">
+
+        <div class="help-card">
+            <div class="help-icon">🌱</div>
+            <h3>Adding Plants</h3>
+            <p>
+                Create plant profiles by entering plant type,
+                soil type, pot size and sunlight conditions.
+            </p>
+        </div>
+
+        <div class="help-card">
+            <div class="help-icon">💧</div>
+            <h3>Smart Irrigation</h3>
+            <p>
+                Generate personalized watering plans based on
+                plant and environmental conditions.
+            </p>
+        </div>
+
+        <div class="help-card">
+            <div class="help-icon">📊</div>
+            <h3>Analytics</h3>
+            <p>
+                Track water consumption, plant health,
+                efficiency and conservation performance.
+            </p>
+        </div>
+
+        <div class="help-card">
+            <div class="help-icon">🔔</div>
+            <h3>Notifications</h3>
+            <p>
+                Receive reminders for watering schedules,
+                plant health alerts and water-saving milestones.
+            </p>
+        </div>
+
+        <div class="help-card">
+            <div class="help-icon">⚙️</div>
+            <h3>Settings</h3>
+            <p>
+                Customize irrigation preferences, notifications,
+                appearance and privacy options.
+            </p>
+        </div>
+
+        <div class="help-card">
+            <div class="help-icon">❓</div>
+            <h3>FAQ</h3>
+            <p>
+                Find answers to common questions about
+                PlantFlow AI and its features.
+            </p>
+        </div>
+
+    </section>
+
+
+    <!-- PLANT CARE TIPS -->
+    <section class="tips">
+
+        <div class="section-title">
+            <h2>🌿 Smart Plant Care Tips</h2>
+            <p>Simple practices for healthier plants and better water usage.</p>
+        </div>
+
+        <div class="tips-list">
+
+            <div class="tip">
+                <span>✓</span>
+                Water plants according to their specific needs.
+            </div>
+
+            <div class="tip">
+                <span>✓</span>
+                Avoid watering when the soil is already sufficiently moist.
+            </div>
+
+            <div class="tip">
+                <span>✓</span>
+                Prefer morning or evening watering to reduce evaporation.
+            </div>
+
+            <div class="tip">
+                <span>✓</span>
+                Monitor plant health regularly.
+            </div>
+
+            <div class="tip">
+                <span>✓</span>
+                Use the analytics page to monitor water consumption.
+            </div>
+
+            <div class="tip">
+                <span>✓</span>
+                Adjust irrigation plans when plant conditions change.
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CTA -->
+    <section class="cta">
+
+        <h2>Still Need Help?</h2>
+
+        <p>
+            Check our FAQ section or contact the PlantFlow AI support team.
+        </p>
+
+        <button onclick="window.location.href='faq.html'">
+            View FAQ →
+        </button>
+
+        <button
+            onclick="window.location.href='contact.html'"
+            style="margin-left:10px;"
+        >
+            Contact Us
+        </button>
+
+    </section>
+
+</div>
+
+
+<footer>
+    © 2026 PlantFlow AI • Smart Plant Irrigation & Water Management
+</footer>
+
+
+<script>
+
+    const messages = document.getElementById("messages");
+    const input = document.getElementById("userInput");
+
+
+    function addMessage(text, type) {
+
+        const div = document.createElement("div");
+
+        div.className = "message " + type;
+
+        div.innerHTML = text;
+
+        messages.appendChild(div);
+
+        messages.scrollTop = messages.scrollHeight;
+    }
+
+
+    function getBotResponse(question) {
+
+        const q = question.toLowerCase();
+
+        if (q.includes("rose")) {
+
+            return "🌹 A rose generally needs regular watering, but the exact amount depends on pot size, soil and weather. PlantFlow can generate a personalized plan.";
+
+        }
+
+        if (
+            q.includes("water") &&
+            (q.includes("save") || q.includes("saving"))
+        ) {
+
+            return "💧 Use Smart Water Saving Mode, avoid overwatering, prefer morning/evening watering and monitor your water analytics.";
+
+        }
+
+        if (
+            q.includes("irrigation") ||
+            q.includes("watering")
+        ) {
+
+            return "💦 Smart Irrigation creates a watering plan using plant type, soil, sunlight, condition and pot size.";
+
+        }
+
+        if (
+            q.includes("health") ||
+            q.includes("healthy")
+        ) {
+
+            return "🌿 Plant Health represents the estimated condition of your plant. Higher scores indicate better overall plant condition in this demo system.";
+
+        }
+
+        if (
+            q.includes("analytics") ||
+            q.includes("report")
+        ) {
+
+            return "📊 Analytics helps you monitor daily and weekly water usage, water savings, plant health and irrigation efficiency.";
+
+        }
+
+        if (
+            q.includes("plant") ||
+            q.includes("add")
+        ) {
+
+            return "🌱 Go to My Plants → Add Plant. Enter the plant details and create its profile.";
+
+        }
+
+        if (
+            q.includes("hello") ||
+            q.includes("hi")
+        ) {
+
+            return "👋 Hello! I'm ready to help with your PlantFlow AI questions.";
+
+        }
+
+        return "🤖 I can help with plants, watering, irrigation, water saving, plant health and analytics. Try asking one of those topics.";
+
+    }
+
+
+    function sendMessage() {
+
+        const question = input.value.trim();
+
+        if (question === "") return;
+
+        addMessage(question, "user");
+
+        input.value = "";
+
+        setTimeout(() => {
+
+            const answer = getBotResponse(question);
+
+            addMessage(answer, "bot");
+
+        }, 500);
+    }
+
+
+    function quickQuestion(question) {
+
+        input.value = question;
+
+        sendMessage();
+
+    }
+
+
+    function handleKey(event) {
+
+        if (event.key === "Enter") {
+            sendMessage();
+        }
+
+    }
+
+</script>
+
+</body>
+</html>
+

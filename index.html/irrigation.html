@@ -1,0 +1,819 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Irrigation | PlantFlow AI</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #06150d;
+            color: #f1fff5;
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+        header {
+            height: 75px;
+            padding: 0 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(6, 21, 13, 0.92);
+            border-bottom: 1px solid rgba(80, 220, 130, 0.12);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(15px);
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: bold;
+            color: #69f09b;
+        }
+
+        nav {
+            display: flex;
+            gap: 28px;
+        }
+
+        nav a {
+            color: #a9bbae;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: #69f09b;
+        }
+
+        .profile {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #123d24;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #69f09b;
+            font-weight: bold;
+        }
+
+        /* MAIN */
+        main {
+            width: 86%;
+            max-width: 1250px;
+            margin: auto;
+            padding: 45px 0;
+        }
+
+        .page-title {
+            margin-bottom: 35px;
+        }
+
+        .page-title span {
+            color: #69f09b;
+            font-size: 13px;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+
+        .page-title h1 {
+            font-size: 38px;
+            margin: 10px 0;
+        }
+
+        .page-title p {
+            color: #91a696;
+            max-width: 650px;
+            line-height: 1.6;
+        }
+
+        /* GRID */
+        .planner-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 25px;
+        }
+
+        .card {
+            background: linear-gradient(
+                145deg,
+                rgba(22, 52, 34, 0.9),
+                rgba(10, 28, 17, 0.95)
+            );
+            border: 1px solid rgba(105, 240, 155, 0.13);
+            border-radius: 22px;
+            padding: 28px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        .card h2 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .card-subtitle {
+            color: #829689;
+            font-size: 13px;
+            margin-bottom: 25px;
+        }
+
+        /* FORM */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .input-box {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .input-box.full {
+            grid-column: span 2;
+        }
+
+        label {
+            color: #a9bbae;
+            font-size: 13px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid #284936;
+            background: #0b2113;
+            color: white;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #69f09b;
+        }
+
+        .generate-btn {
+            width: 100%;
+            padding: 15px;
+            margin-top: 23px;
+            border: none;
+            border-radius: 12px;
+            background: #69f09b;
+            color: #06150d;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(105,240,155,0.18);
+        }
+
+        /* RESULT */
+        .result-box {
+            text-align: center;
+        }
+
+        .water-circle {
+            width: 175px;
+            height: 175px;
+            border-radius: 50%;
+            margin: 20px auto;
+            border: 8px solid #244c32;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(
+                circle,
+                #123d24,
+                #091c10
+            );
+        }
+
+        .water-circle strong {
+            font-size: 42px;
+            color: #69f09b;
+        }
+
+        .water-circle span {
+            color: #91a696;
+            font-size: 13px;
+        }
+
+        .recommendation {
+            display: grid;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .recommend-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 14px;
+            background: rgba(105,240,155,0.05);
+            border-radius: 12px;
+        }
+
+        .recommend-item span:first-child {
+            color: #8fa394;
+        }
+
+        .recommend-item span:last-child {
+            color: #69f09b;
+            font-weight: bold;
+        }
+
+        /* WATER SAVING */
+        .saving-card {
+            margin-top: 25px;
+        }
+
+        .saving-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .toggle {
+            width: 48px;
+            height: 26px;
+            background: #31523c;
+            border-radius: 20px;
+            cursor: pointer;
+            padding: 3px;
+        }
+
+        .toggle-circle {
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        .toggle.active {
+            background: #69f09b;
+        }
+
+        .toggle.active .toggle-circle {
+            transform: translateX(22px);
+        }
+
+        /* TIMELINE */
+        .timeline {
+            margin-top: 25px;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 18px;
+            padding: 18px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .time {
+            min-width: 75px;
+            color: #69f09b;
+            font-weight: bold;
+        }
+
+        .timeline-content h3 {
+            font-size: 15px;
+        }
+
+        .timeline-content p {
+            font-size: 12px;
+            color: #819286;
+            margin-top: 5px;
+        }
+
+        .status {
+            margin-left: auto;
+            color: #69f09b;
+            font-size: 12px;
+        }
+
+        /* SCORE */
+        .score {
+            margin-top: 25px;
+            padding: 22px;
+            border-radius: 18px;
+            background: linear-gradient(
+                135deg,
+                rgba(105,240,155,0.1),
+                rgba(105,240,155,0.02)
+            );
+        }
+
+        .score-top {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .score-value {
+            color: #69f09b;
+            font-weight: bold;
+        }
+
+        .progress {
+            height: 8px;
+            border-radius: 20px;
+            background: #1b3524;
+            overflow: hidden;
+        }
+
+        .progress span {
+            display: block;
+            width: 92%;
+            height: 100%;
+            background: #69f09b;
+            border-radius: 20px;
+        }
+
+        /* RESPONSIVE */
+        @media(max-width: 900px) {
+            .planner-grid {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                display: none;
+            }
+        }
+
+        @media(max-width: 600px) {
+            main {
+                width: 92%;
+                padding: 30px 0;
+            }
+
+            .page-title h1 {
+                font-size: 29px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .input-box.full {
+                grid-column: span 1;
+            }
+
+            .card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">🌱 PlantFlow AI</div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="plants.html">My Plants</a>
+        <a href="irrigation.html">Irrigation</a>
+        <a href="analytics.html">Analytics</a>
+        <a href="weather.html">Weather</a>
+        <a href="assistant.html">AI Assistant</a>
+        <a href="help.html">Help</a>
+        <a href="about.html" class="active">About</a>
+        <a href="contact.html" class="active">Contact</a>
+        <a href="notifications.html">🔔 Notifications</a>
+        <a href="settings.html">⚙️ Settings</a>
+        
+    </nav>
+
+    <div class="profile">S</div>
+
+</header>
+
+
+<main>
+
+    <section class="page-title">
+        <span>SMART WATER MANAGEMENT</span>
+        <h1>💧 Smart Irrigation Planner</h1>
+        <p>
+            Create an intelligent watering plan based on your plant,
+            soil, sunlight and environmental conditions.
+        </p>
+    </section>
+
+
+    <div class="planner-grid">
+
+        <!-- INPUT CARD -->
+
+        <div class="card">
+
+            <h2>🌿 Plant Conditions</h2>
+
+            <p class="card-subtitle">
+                Enter your plant details to generate a personalized irrigation plan.
+            </p>
+
+            <div class="form-grid">
+
+                <div class="input-box">
+                    <label>Plant</label>
+
+                    <select id="plant">
+                        <option value="rose">Rose</option>
+                        <option value="tomato">Tomato</option>
+                        <option value="mint">Mint</option>
+                        <option value="aloe">Aloe Vera</option>
+                        <option value="basil">Basil</option>
+                        <option value="money">Money Plant</option>
+                    </select>
+                </div>
+
+
+                <div class="input-box">
+                    <label>Soil Type</label>
+
+                    <select id="soil">
+                        <option value="loamy">Loamy</option>
+                        <option value="sandy">Sandy</option>
+                        <option value="clay">Clay</option>
+                        <option value="moist">Moist</option>
+                    </select>
+                </div>
+
+
+                <div class="input-box">
+                    <label>Sunlight</label>
+
+                    <select id="sunlight">
+                        <option value="low">Low</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+
+
+                <div class="input-box">
+                    <label>Plant Condition</label>
+
+                    <select id="condition">
+                        <option value="normal" selected>Normal</option>
+                        <option value="dry">Dry</option>
+                        <option value="healthy">Very Healthy</option>
+                    </select>
+                </div>
+
+
+                <div class="input-box">
+                    <label>Pot Size</label>
+
+                    <select id="pot">
+                        <option value="small">Small</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="large">Large</option>
+                    </select>
+                </div>
+
+
+                <div class="input-box">
+                    <label>Preferred Time</label>
+
+                    <select id="time">
+                        <option>6:00 AM</option>
+                        <option selected>6:00 PM</option>
+                        <option>7:00 PM</option>
+                    </select>
+                </div>
+
+            </div>
+
+
+            <button class="generate-btn" onclick="generatePlan()">
+                ✨ Generate Smart Plan
+            </button>
+
+        </div>
+
+
+        <!-- RESULT CARD -->
+
+        <div class="card result-box">
+
+            <h2>💧 AI Water Recommendation</h2>
+
+            <p class="card-subtitle">
+                Recommended amount for the selected plant
+            </p>
+
+
+            <div class="water-circle">
+
+                <strong id="waterAmount">250</strong>
+
+                <span>ML WATER</span>
+
+            </div>
+
+
+            <div class="recommendation">
+
+                <div class="recommend-item">
+                    <span>Water Frequency</span>
+                    <span id="frequency">Every 2 Days</span>
+                </div>
+
+                <div class="recommend-item">
+                    <span>Best Time</span>
+                    <span id="bestTime">6:00 PM</span>
+                </div>
+
+                <div class="recommend-item">
+                    <span>Water Efficiency</span>
+                    <span id="efficiency">High</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- WATER SAVING MODE -->
+
+    <div class="card saving-card">
+
+        <div class="saving-header">
+
+            <div>
+                <h2>🌎 Water Saving Mode</h2>
+
+                <p class="card-subtitle" style="margin-top:8px;margin-bottom:0;">
+                    Reduce unnecessary watering and optimize daily water usage.
+                </p>
+            </div>
+
+            <div class="toggle" id="toggle" onclick="toggleSaving()">
+                <div class="toggle-circle"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- TODAY TIMELINE -->
+
+    <div class="card timeline">
+
+        <h2>🕒 Today's Irrigation Timeline</h2>
+
+        <p class="card-subtitle">
+            Your scheduled watering activities
+        </p>
+
+
+        <div class="timeline-item">
+
+            <div class="time">6:00 PM</div>
+
+            <div class="timeline-content">
+                <h3>🌹 Rose</h3>
+                <p>250 ml • Loamy Soil</p>
+            </div>
+
+            <div class="status">Scheduled</div>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <div class="time">6:30 PM</div>
+
+            <div class="timeline-content">
+                <h3>🍅 Tomato</h3>
+                <p>400 ml • Sandy Soil</p>
+            </div>
+
+            <div class="status">Scheduled</div>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <div class="time">7:00 PM</div>
+
+            <div class="timeline-content">
+                <h3>🌿 Mint</h3>
+                <p>150 ml • Moist Soil</p>
+            </div>
+
+            <div class="status">Scheduled</div>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <div class="time">Tomorrow</div>
+
+            <div class="timeline-content">
+                <h3>🌵 Aloe Vera</h3>
+                <p>100 ml • Sandy Soil</p>
+            </div>
+
+            <div class="status">Pending</div>
+
+        </div>
+
+    </div>
+
+
+    <!-- SCORE -->
+
+    <div class="score">
+
+        <div class="score-top">
+
+            <span>💚 Irrigation Efficiency Score</span>
+
+            <span class="score-value">92%</span>
+
+        </div>
+
+        <div class="progress">
+            <span></span>
+        </div>
+
+    </div>
+
+</main>
+
+
+<script>
+
+    function generatePlan() {
+
+        const plant = document.getElementById("plant").value;
+        const soil = document.getElementById("soil").value;
+        const sunlight = document.getElementById("sunlight").value;
+        const condition = document.getElementById("condition").value;
+        const pot = document.getElementById("pot").value;
+        const time = document.getElementById("time").value;
+
+        let water = 250;
+        let frequency = "Every 2 Days";
+        let efficiency = "High";
+
+
+        /* PLANT BASE WATER */
+
+        const plantWater = {
+
+            rose: 250,
+            tomato: 400,
+            mint: 150,
+            aloe: 100,
+            basil: 200,
+            money: 180
+
+        };
+
+        water = plantWater[plant];
+
+
+        /* POT SIZE */
+
+        if (pot === "small") {
+            water -= 30;
+        }
+
+        if (pot === "large") {
+            water += 80;
+        }
+
+
+        /* SUNLIGHT */
+
+        if (sunlight === "high") {
+            water += 50;
+        }
+
+        if (sunlight === "low") {
+            water -= 30;
+        }
+
+
+        /* SOIL */
+
+        if (soil === "sandy") {
+            frequency = "Every Day";
+        }
+
+        if (soil === "clay") {
+            frequency = "Every 3 Days";
+            water -= 30;
+        }
+
+        if (soil === "moist") {
+            frequency = "Every 3 Days";
+            water -= 40;
+        }
+
+
+        /* CONDITION */
+
+        if (condition === "dry") {
+            water += 70;
+        }
+
+        if (condition === "healthy") {
+            water -= 20;
+        }
+
+
+        if (water < 50) {
+            water = 50;
+        }
+
+
+        if (water > 500) {
+            water = 500;
+        }
+
+
+        if (water <= 180) {
+            efficiency = "Excellent";
+        }
+
+        else if (water <= 300) {
+            efficiency = "High";
+        }
+
+        else {
+            efficiency = "Moderate";
+        }
+
+
+        document.getElementById("waterAmount").textContent = water;
+
+        document.getElementById("frequency").textContent = frequency;
+
+        document.getElementById("bestTime").textContent = time;
+
+        document.getElementById("efficiency").textContent = efficiency;
+
+    }
+
+
+    function toggleSaving() {
+
+        const toggle = document.getElementById("toggle");
+
+        toggle.classList.toggle("active");
+
+        if (toggle.classList.contains("active")) {
+
+            alert(
+                "🌎 Water Saving Mode ON!\n\n" +
+                "PlantFlow AI will prioritize water-efficient irrigation."
+            );
+
+        } else {
+
+            alert("Water Saving Mode OFF");
+
+        }
+
+    }
+
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account | PlantFlow AI</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 10% 15%, rgba(105,240,155,.13), transparent 28%),
+                radial-gradient(circle at 90% 85%, rgba(35,120,65,.15), transparent 30%),
+                #06150d;
+            color: #f1fff5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 0;
+        }
+
+        .register-container {
+            width: 950px;
+            max-width: 93%;
+            display: grid;
+            grid-template-columns: .9fr 1.1fr;
+            background: rgba(12,34,20,.9);
+            border: 1px solid rgba(105,240,155,.14);
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 30px 100px rgba(0,0,0,.45);
+            backdrop-filter: blur(20px);
+        }
+
+        /* LEFT */
+
+        .intro {
+            padding: 55px;
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(105,240,155,.12),
+                    rgba(7,27,15,.4)
+                );
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .logo {
+            color: #69f09b;
+            font-size: 23px;
+            font-weight: bold;
+            margin-bottom: 65px;
+        }
+
+        .intro h1 {
+            font-size: 40px;
+            line-height: 1.12;
+            margin-bottom: 18px;
+        }
+
+        .intro h1 span {
+            color: #69f09b;
+        }
+
+        .intro p {
+            color: #91a497;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .steps {
+            margin-top: 35px;
+            display: grid;
+            gap: 16px;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+        .step-number {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: rgba(105,240,155,.08);
+            border: 1px solid rgba(105,240,155,.16);
+            color: #69f09b;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .step-text {
+            color: #aebdb3;
+            font-size: 12px;
+        }
+
+        /* FORM */
+
+        .form-area {
+            padding: 45px 55px;
+        }
+
+        .form-area h2 {
+            font-size: 27px;
+            margin-bottom: 7px;
+        }
+
+        .subtitle {
+            color: #819286;
+            font-size: 12px;
+            margin-bottom: 25px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .field.full {
+            grid-column: span 2;
+        }
+
+        label {
+            color: #a6b7ac;
+            font-size: 11px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 13px;
+            border-radius: 10px;
+            border: 1px solid #284936;
+            background: #081b10;
+            color: white;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #69f09b;
+            box-shadow: 0 0 0 3px rgba(105,240,155,.04);
+        }
+
+        /* PASSWORD */
+
+        .password-box {
+            position: relative;
+        }
+
+        .password-box input {
+            padding-right: 45px;
+        }
+
+        .eye {
+            position: absolute;
+            right: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            opacity: .7;
+        }
+
+        .strength {
+            margin-top: 8px;
+        }
+
+        .strength-bar {
+            height: 5px;
+            border-radius: 10px;
+            background: #1d3325;
+            overflow: hidden;
+        }
+
+        .strength-fill {
+            width: 0%;
+            height: 100%;
+            border-radius: 10px;
+            background: #69f09b;
+            transition: .3s;
+        }
+
+        .strength-text {
+            color: #718278;
+            font-size: 10px;
+            margin-top: 5px;
+        }
+
+        /* TERMS */
+
+        .terms {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-top: 20px;
+            color: #7e9084;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        .terms input {
+            width: auto;
+            margin-top: 2px;
+            accent-color: #69f09b;
+        }
+
+        .terms a {
+            color: #69f09b;
+            text-decoration: none;
+        }
+
+        .create-btn {
+            width: 100%;
+            margin-top: 20px;
+            padding: 15px;
+            border: none;
+            border-radius: 11px;
+            background: #69f09b;
+            color: #06150d;
+            font-weight: bold;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .create-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(105,240,155,.18);
+        }
+
+        .login-link {
+            text-align: center;
+            color: #7e9084;
+            font-size: 12px;
+            margin-top: 20px;
+        }
+
+        .login-link a {
+            color: #69f09b;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .message {
+            display: none;
+            margin-top: 15px;
+            padding: 11px;
+            border-radius: 9px;
+            text-align: center;
+            font-size: 11px;
+        }
+
+        .error {
+            background: rgba(255,70,70,.08);
+            color: #ff8d8d;
+        }
+
+        .success {
+            background: rgba(105,240,155,.08);
+            color: #69f09b;
+        }
+
+        /* RESPONSIVE */
+
+        @media(max-width: 800px) {
+
+            .register-container {
+                grid-template-columns: 1fr;
+            }
+
+            .intro {
+                padding: 35px;
+            }
+
+            .logo {
+                margin-bottom: 35px;
+            }
+
+            .intro h1 {
+                font-size: 32px;
+            }
+
+            .form-area {
+                padding: 35px;
+            }
+        }
+
+        @media(max-width: 500px) {
+
+            .register-container {
+                max-width: 94%;
+            }
+
+            .intro,
+            .form-area {
+                padding: 28px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .field.full {
+                grid-column: span 1;
+            }
+
+            .intro h1 {
+                font-size: 28px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<div class="register-container">
+
+    <!-- INTRO -->
+
+    <section class="intro">
+
+        <div class="logo">
+            🌱 PlantFlow AI
+        </div>
+
+        <h1>
+            Start Your<br>
+            <span>Green Journey.</span>
+        </h1>
+
+        <p>
+            Create your PlantFlow AI account and manage your
+            plants, irrigation schedules and water usage
+            from one intelligent platform.
+        </p>
+
+
+        <div class="steps">
+
+            <div class="step">
+
+                <div class="step-number">1</div>
+
+                <div class="step-text">
+                    Create your personal plant profile
+                </div>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-number">2</div>
+
+                <div class="step-text">
+                    Add and organize your plants
+                </div>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-number">3</div>
+
+                <div class="step-text">
+                    Generate smart irrigation plans
+                </div>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-number">4</div>
+
+                <div class="step-text">
+                    Track your water savings
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FORM -->
+
+    <section class="form-area">
+
+        <h2>Create Account</h2>
+
+        <p class="subtitle">
+            Join PlantFlow AI and start managing smarter.
+        </p>
+
+
+        <form onsubmit="registerUser(event)">
+
+            <div class="form-grid">
+
+                <!-- NAME -->
+
+                <div class="field">
+
+                    <label>FULL NAME</label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        placeholder="Your name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- USERNAME -->
+
+                <div class="field">
+
+                    <label>USERNAME</label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        placeholder="Choose username"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="field full">
+
+                    <label>EMAIL ADDRESS</label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="you@example.com"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="field">
+
+                    <label>PASSWORD</label>
+
+                    <div class="password-box">
+
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="Create password"
+                            oninput="checkStrength()"
+                            required
+                        >
+
+                        <span
+                            class="eye"
+                            onclick="togglePassword('password','eye1')"
+                            id="eye1">
+                            👁
+                        </span>
+
+                    </div>
+
+
+                    <div class="strength">
+
+                        <div class="strength-bar">
+                            <div
+                                class="strength-fill"
+                                id="strengthFill">
+                            </div>
+                        </div>
+
+                        <div
+                            class="strength-text"
+                            id="strengthText">
+                            Password strength
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CONFIRM -->
+
+                <div class="field">
+
+                    <label>CONFIRM PASSWORD</label>
+
+                    <div class="password-box">
+
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            placeholder="Repeat password"
+                            required
+                        >
+
+                        <span
+                            class="eye"
+                            onclick="togglePassword('confirmPassword','eye2')"
+                            id="eye2">
+                            👁
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PLANT TYPE -->
+
+                <div class="field">
+
+                    <label>MAIN PLANT TYPE</label>
+
+                    <select id="plant">
+
+                        <option value="">Select plant</option>
+                        <option>Rose</option>
+                        <option>Tomato</option>
+                        <option>Mint</option>
+                        <option>Aloe Vera</option>
+                        <option>Basil</option>
+                        <option>Money Plant</option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- EXPERIENCE -->
+
+                <div class="field">
+
+                    <label>PLANT EXPERIENCE</label>
+
+                    <select id="experience">
+
+                        <option>Beginner</option>
+                        <option>Intermediate</option>
+                        <option>Experienced</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- TERMS -->
+
+            <label class="terms">
+
+                <input
+                    type="checkbox"
+                    id="terms"
+                    required
+                >
+
+                <span>
+                    I agree to the PlantFlow AI
+                    <a href="#">Terms</a>
+                    and
+                    <a href="#">Privacy Policy</a>.
+                </span>
+
+            </label>
+
+
+            <button class="create-btn" type="submit">
+                Create My Account →
+            </button>
+
+
+            <div
+                class="message"
+                id="message">
+            </div>
+
+        </form>
+
+
+        <div class="login-link">
+
+            Already have an account?
+
+            <a href="login.html">
+                Sign in
+            </a>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<script>
+
+    /* PASSWORD VISIBILITY */
+
+    function togglePassword(inputId, eyeId) {
+
+        const input =
+            document.getElementById(inputId);
+
+        const eye =
+            document.getElementById(eyeId);
+
+
+        if (input.type === "password") {
+
+            input.type = "text";
+            eye.textContent = "🙈";
+
+        } else {
+
+            input.type = "password";
+            eye.textContent = "👁";
+
+        }
+
+    }
+
+
+    /* PASSWORD STRENGTH */
+
+    function checkStrength() {
+
+        const password =
+            document.getElementById("password").value;
+
+        const fill =
+            document.getElementById("strengthFill");
+
+        const text =
+            document.getElementById("strengthText");
+
+
+        let strength = 0;
+
+
+        if (password.length >= 6) {
+            strength++;
+        }
+
+        if (password.length >= 10) {
+            strength++;
+        }
+
+        if (/[A-Z]/.test(password)) {
+            strength++;
+        }
+
+        if (/[0-9]/.test(password)) {
+            strength++;
+        }
+
+        if (/[^A-Za-z0-9]/.test(password)) {
+            strength++;
+        }
+
+
+        if (password.length === 0) {
+
+            fill.style.width = "0%";
+            text.textContent = "Password strength";
+
+        }
+
+        else if (strength <= 2) {
+
+            fill.style.width = "35%";
+            text.textContent = "Weak password";
+
+        }
+
+        else if (strength <= 4) {
+
+            fill.style.width = "70%";
+            text.textContent = "Medium password";
+
+        }
+
+        else {
+
+            fill.style.width = "100%";
+            text.textContent = "Strong password";
+
+        }
+
+    }
+
+
+    /* REGISTER */
+
+    function registerUser(event) {
+
+        event.preventDefault();
+
+
+        const name =
+            document.getElementById("name").value.trim();
+
+        const password =
+            document.getElementById("password").value;
+
+        const confirmPassword =
+            document.getElementById("confirmPassword").value;
+
+        const message =
+            document.getElementById("message");
+
+
+        if (password !== confirmPassword) {
+
+            message.style.display = "block";
+            message.className = "message error";
+            message.textContent =
+                "❌ Passwords do not match.";
+
+            return;
+
+        }
+
+
+        if (password.length < 6) {
+
+            message.style.display = "block";
+            message.className = "message error";
+            message.textContent =
+                "❌ Password must contain at least 6 characters.";
+
+            return;
+
+        }
+
+
+        message.style.display = "block";
+        message.className = "message success";
+        message.textContent =
+            "✅ Account created successfully!";
+
+
+        setTimeout(() => {
+
+            window.location.href =
+                "login.html";
+
+        }, 1200);
+
+    }
+
+</script>
+
+</body>
+</html>
+

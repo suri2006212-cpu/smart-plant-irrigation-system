@@ -1,0 +1,1280 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Notifications | PlantFlow AI</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        body {
+            background: #06150d;
+            color: #f4fff7;
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+
+        header {
+            height: 75px;
+            padding: 0 7%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            position: sticky;
+            top: 0;
+            z-index: 100;
+
+            background: rgba(6,21,13,0.96);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .logo {
+            color: #69f09b;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        nav {
+            display: flex;
+            gap: 24px;
+        }
+
+        nav a {
+            color: #aebdb3;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #69f09b;
+        }
+
+        .notification-icon {
+            position: relative;
+            width: 40px;
+            height: 40px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(105,240,155,0.08);
+            border: 1px solid rgba(105,240,155,0.2);
+
+            border-radius: 12px;
+
+            font-size: 19px;
+        }
+
+        .badge-count {
+            position: absolute;
+
+            top: -5px;
+            right: -5px;
+
+            min-width: 19px;
+            height: 19px;
+
+            padding: 0 5px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #69f09b;
+            color: #06150d;
+
+            border-radius: 50%;
+
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .profile {
+            width: 40px;
+            height: 40px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: #69f09b;
+            color: #06150d;
+
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        /* HERO */
+
+        .hero {
+            padding: 75px 7% 45px;
+            text-align: center;
+
+            background:
+                radial-gradient(
+                    circle at top,
+                    rgba(105,240,155,0.13),
+                    transparent 48%
+                );
+        }
+
+        .badge {
+            display: inline-block;
+
+            padding: 7px 15px;
+            margin-bottom: 16px;
+
+            color: #69f09b;
+
+            border: 1px solid rgba(105,240,155,0.3);
+            border-radius: 30px;
+
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        .hero h1 span {
+            color: #69f09b;
+        }
+
+        .hero p {
+            color: #91a197;
+            font-size: 16px;
+        }
+
+        /* MAIN */
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 35px 20px 80px;
+        }
+
+        /* TOP BAR */
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 22px;
+        }
+
+        .notification-summary {
+            color: #829187;
+            font-size: 14px;
+        }
+
+        .notification-summary span {
+            color: #69f09b;
+            font-weight: 700;
+        }
+
+        .mark-read {
+            border: 1px solid rgba(105,240,155,0.25);
+
+            background: rgba(105,240,155,0.07);
+            color: #69f09b;
+
+            padding: 9px 15px;
+            border-radius: 9px;
+
+            cursor: pointer;
+            font-size: 13px;
+
+            transition: 0.3s;
+        }
+
+        .mark-read:hover {
+            background: #69f09b;
+            color: #06150d;
+        }
+
+        /* FILTER */
+
+        .filters {
+            display: flex;
+            gap: 9px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .filter-btn {
+            border: 1px solid rgba(255,255,255,0.08);
+
+            background: #0a1e13;
+            color: #91a197;
+
+            padding: 9px 16px;
+            border-radius: 20px;
+
+            cursor: pointer;
+            font-size: 13px;
+
+            transition: 0.3s;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: #69f09b;
+            color: #06150d;
+            border-color: #69f09b;
+        }
+
+        /* NOTIFICATION LIST */
+
+        .notification-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .notification {
+            position: relative;
+
+            display: flex;
+            gap: 16px;
+
+            padding: 20px;
+
+            background: #0a1e13;
+
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 16px;
+
+            transition: 0.3s;
+        }
+
+        .notification:hover {
+            border-color: rgba(105,240,155,0.25);
+            transform: translateY(-2px);
+        }
+
+        .notification.unread {
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(105,240,155,0.08),
+                    #0a1e13
+                );
+
+            border-left: 3px solid #69f09b;
+        }
+
+        .notification-icon-box {
+            width: 48px;
+            height: 48px;
+
+            flex-shrink: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 13px;
+
+            font-size: 22px;
+        }
+
+        .water {
+            background: rgba(65,160,255,0.12);
+        }
+
+        .health {
+            background: rgba(105,240,155,0.12);
+        }
+
+        .warning {
+            background: rgba(255,190,70,0.12);
+        }
+
+        .saving {
+            background: rgba(160,110,255,0.12);
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            margin-bottom: 5px;
+        }
+
+        .notification-title h3 {
+            font-size: 15px;
+        }
+
+        .new-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #69f09b;
+        }
+
+        .notification-content p {
+            color: #91a197;
+            font-size: 13px;
+            max-width: 720px;
+        }
+
+        .notification-time {
+            margin-top: 8px;
+            color: #66756c;
+            font-size: 11px;
+        }
+
+        .notification-action {
+            align-self: center;
+
+            border: none;
+            background: transparent;
+
+            color: #6f8075;
+
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .notification-action:hover {
+            color: #69f09b;
+        }
+
+        /* EMPTY */
+
+        .empty-state {
+            display: none;
+            text-align: center;
+            padding: 60px 20px;
+
+            background: #0a1e13;
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 18px;
+        }
+
+        .empty-state .icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .empty-state h3 {
+            margin-bottom: 7px;
+        }
+
+        .empty-state p {
+            color: #829187;
+            font-size: 13px;
+        }
+
+        /* CTA */
+
+        .bottom-card {
+            margin-top: 30px;
+            padding: 28px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+
+            background:
+                linear-gradient(
+                    120deg,
+                    rgba(105,240,155,0.08),
+                    rgba(255,255,255,0.02)
+                );
+
+            border: 1px solid rgba(105,240,155,0.15);
+            border-radius: 18px;
+        }
+
+        .bottom-card h3 {
+            margin-bottom: 5px;
+        }
+
+        .bottom-card p {
+            color: #829187;
+            font-size: 13px;
+        }
+
+        .dashboard-btn {
+            border: none;
+
+            background: #69f09b;
+            color: #06150d;
+
+            padding: 12px 20px;
+            border-radius: 9px;
+
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* FOOTER */
+
+        footer {
+            padding: 30px;
+
+            border-top: 1px solid rgba(255,255,255,0.07);
+
+            text-align: center;
+
+            color: #708078;
+            font-size: 13px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 900px) {
+
+            nav {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            header {
+                padding: 0 5%;
+            }
+
+            .hero {
+                padding: 60px 5% 40px;
+            }
+
+            .hero h1 {
+                font-size: 34px;
+            }
+
+            .top-bar {
+                align-items: flex-start;
+                gap: 15px;
+                flex-direction: column;
+            }
+
+            .notification {
+                padding: 16px;
+            }
+
+            .notification-icon-box {
+                width: 42px;
+                height: 42px;
+            }
+
+            .bottom-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+
+<!-- HEADER -->
+
+<header>
+
+    <div class="logo">
+        🌱 PlantFlow AI
+    </div>
+
+    <nav>
+
+        <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="plants.html">My Plants</a>
+        <a href="irrigation.html">Irrigation</a>
+        <a href="analytics.html">Analytics</a>
+        <a href="weather.html">Weather</a>
+        <a href="assistant.html">AI Assistant</a>
+        <a href="help.html">Help</a>
+        <a href="about.html" class="active">About</a>
+        <a href="contact.html" class="active">Contact</a>
+        <a href="faq.html" class="active">FAQ</a>
+        <a href="notifications.html">🔔 Notifications</a>
+        <a href="settings.html">⚙️ Settings</a>
+    
+
+
+    </nav>
+
+    <div class="notification-icon">
+        🔔
+        <span class="badge-count" id="headerCount">4</span>
+    </div>
+
+    <a href="profile.html" class="profile">
+        S
+    </a>
+
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="badge">
+        SMART ALERT CENTER
+    </div>
+
+    <h1>
+        Your Plant <span>Notifications</span>
+    </h1>
+
+    <p>
+        Stay updated with irrigation schedules,
+        plant health alerts and water-saving insights.
+    </p>
+
+</section>
+
+
+<!-- MAIN -->
+
+<main class="container">
+
+
+    <!-- TOP BAR -->
+
+    <div class="top-bar">
+
+        <div class="notification-summary">
+            You have
+            <span id="unreadCount">4</span>
+            unread notifications
+        </div>
+
+        <button
+            class="mark-read"
+            onclick="markAllRead()"
+        >
+            ✓ Mark All as Read
+        </button>
+
+    </div>
+
+
+    <!-- FILTER -->
+
+    <div class="filters">
+
+        <button
+            class="filter-btn active"
+            data-filter="all"
+        >
+            All
+        </button>
+
+        <button
+            class="filter-btn"
+            data-filter="unread"
+        >
+            Unread
+        </button>
+
+        <button
+            class="filter-btn"
+            data-filter="water"
+        >
+            💧 Irrigation
+        </button>
+
+        <button
+            class="filter-btn"
+            data-filter="health"
+        >
+            🌱 Plant Health
+        </button>
+
+        <button
+            class="filter-btn"
+            data-filter="saving"
+        >
+            💚 Water Saving
+        </button>
+
+    </div>
+
+
+    <!-- NOTIFICATIONS -->
+
+    <div class="notification-list" id="notificationList">
+
+
+        <!-- 01 -->
+
+        <div
+            class="notification unread"
+            data-type="water"
+        >
+
+            <div class="notification-icon-box water">
+                💧
+            </div>
+
+            <div class="notification-content">
+
+                <div class="notification-title">
+
+                    <h3>
+                        Rose needs watering
+                    </h3>
+
+                    <span class="new-dot"></span>
+
+                </div>
+
+                <p>
+                    Your Rose plant is scheduled for
+                    <strong>250 ml</strong> of water today at
+                    <strong>6:00 PM</strong>.
+                </p>
+
+                <div class="notification-time">
+                    Today • 5 minutes ago
+                </div>
+
+            </div>
+
+            <button
+                class="notification-action"
+                onclick="markRead(this)"
+                title="Mark as read"
+            >
+                ✓
+            </button>
+
+        </div>
+
+
+        <!-- 02 -->
+
+        <div
+            class="notification unread"
+            data-type="water"
+        >
+
+            <div class="notification-icon-box water">
+                💧
+            </div>
+
+            <div class="notification-content">
+
+                <div class="notification-title">
+
+                    <h3>
+                        Tomato irrigation reminder
+                    </h3>
+
+                    <span class="new-dot"></span>
+
+                </div>
+
+                <p>
+                    Tomato watering is scheduled at
+                    <strong>6:30 PM</strong>.
+                    Recommended amount: <strong>400 ml</strong>.
+                </p>
+
+                <div class="notification-time">
+                    Today • 25 minutes ago
+                </div>
+
+            </div>
+
+            <button
+                class="notification-action"
+                onclick="markRead(this)"
+                title="Mark as read"
+            >
+                ✓
+            </button>
+
+        </div>
+
+
+        <!-- 03 -->
+
+        <div
+            class="notification unread"
+            data-type="health"
+        >
+
+            <div class="notification-icon-box health">
+                🌱
+            </div>
+
+            <div class="notification-content">
+
+                <div class="notification-title">
+
+                    <h3>
+                        Plant health is excellent
+                    </h3>
+
+                    <span class="new-dot"></span>
+
+                </div>
+
+                <p>
+                    Aloe Vera currently has a
+                    <strong>98%</strong> health score.
+                    Keep following the current schedule.
+                </p>
+
+                <div class="notification-time">
+                    Today • 1 hour ago
+                </div>
+
+            </div>
+
+            <button
+                class="notification-action"
+                onclick="markRead(this)"
+                title="Mark as read"
+            >
+                ✓
+            </button>
+
+        </div>
+
+
+        <!-- 04 -->
+
+        <div
+            class="notification unread"
+            data-type="saving"
+        >
+
+            <div class="notification-icon-box saving">
+                💚
+            </div>
+
+            <div class="notification-content">
+
+                <div class="notification-title">
+
+                    <h3>
+                        Water saving milestone reached
+                    </h3>
+
+                    <span class="new-dot"></span>
+
+                </div>
+
+                <p>
+                    Your current smart irrigation plan
+                    has achieved approximately
+                    <strong>28%</strong> water saving.
+                </p>
+
+                <div class="notification-time">
+                    Today • 2 hours ago
+                </div>
+
+            </div>
+
+            <button
+                class="notification-action"
+                onclick="markRead(this)"
+                title="Mark as read"
+            >
+                ✓
+            </button>
+
+        </div>
+
+
+        <!-- 05 -->
+
+        <div
+            class="notification"
+            data-type="health"
+        >
+
+            <div class="notification-icon-box health">
+                🌿
+            </div>
+
+            <div class="notification-content">
+
+                <div class="notification-title">
+
+                    <h3>
+                        Mint watering completed
+                    </h3>
+
+                </div>
+
+                <p>
+                    The scheduled <strong>150 ml</strong>
+                    irrigation task for Mint has been completed.
+                </p>
+
+                <div class="notification-time">
+                    Yesterday • 7:15 PM
+                </div>
+
+            </div>
+
+            <button
+                class="notification-action"
+                onclick="removeNotification(this)"
+                title="Remove"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <!-- 06 -->
+
+        <div
+            class="notification"
+            data-type="water"
+        >
+
+            <div class="notification-icon-box water">
+                💧
+            </div>
+
+            <div class="notification-content">
+
+                <div class="notification-title">
+
+                    <h3>
+                        Aloe Vera schedule updated
+                    </h3>
+
+                </div>
+
+                <p>
+                    Aloe Vera has been moved to tomorrow's
+                    irrigation schedule with a recommended
+                    amount of <strong>100 ml</strong>.
+                </p>
+
+                <div class="notification-time">
+                    Yesterday • 6:00 PM
+                </div>
+
+            </div>
+
+            <button
+                class="notification-action"
+                onclick="removeNotification(this)"
+                title="Remove"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <!-- 07 -->
+
+        <div
+            class="notification"
+            data-type="saving"
+        >
+
+            <div class="notification-icon-box saving">
+                📊
+            </div>
+
+            <div class="notification-content">
+
+                <div class="notification-title">
+
+                    <h3>
+                        Weekly water report is ready
+                    </h3>
+
+                </div>
+
+                <p>
+                    Review your weekly water usage and
+                    conservation performance on the Analytics page.
+                </p>
+
+                <div class="notification-time">
+                    2 days ago
+                </div>
+
+            </div>
+
+            <button
+                class="notification-action"
+                onclick="removeNotification(this)"
+                title="Remove"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <!-- 08 -->
+
+        <div
+            class="notification"
+            data-type="health"
+        >
+
+            <div class="notification-icon-box health">
+                🌱
+            </div>
+
+            <div class="notification-content">
+
+                <div class="notification-title">
+
+                    <h3>
+                        Basil needs attention
+                    </h3>
+
+                </div>
+
+                <p>
+                    Basil's current health score is
+                    <strong>89%</strong>. Check its soil condition
+                    and watering schedule.
+                </p>
+
+                <div class="notification-time">
+                    3 days ago
+                </div>
+
+            </div>
+
+            <button
+                class="notification-action"
+                onclick="removeNotification(this)"
+                title="Remove"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- EMPTY -->
+
+    <div class="empty-state" id="emptyState">
+
+        <div class="icon">
+            🌿
+        </div>
+
+        <h3>
+            No notifications here
+        </h3>
+
+        <p>
+            You're all caught up!
+        </p>
+
+    </div>
+
+
+    <!-- BOTTOM CARD -->
+
+    <div class="bottom-card">
+
+        <div>
+
+            <h3>
+                Want to manage your plants?
+            </h3>
+
+            <p>
+                Open your dashboard to view today's
+                irrigation plan and plant health.
+            </p>
+
+        </div>
+
+        <button
+            class="dashboard-btn"
+            onclick="goDashboard()"
+        >
+            Open Dashboard →
+        </button>
+
+    </div>
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer>
+    © 2026 PlantFlow AI • Smart Web-Based Plant Management System
+</footer>
+
+
+<script>
+
+    const notifications =
+        document.querySelectorAll(".notification");
+
+    const unreadCount =
+        document.getElementById("unreadCount");
+
+    const headerCount =
+        document.getElementById("headerCount");
+
+    const emptyState =
+        document.getElementById("emptyState");
+
+    let activeFilter = "all";
+
+
+    /* UPDATE COUNT */
+
+    function updateCount() {
+
+        const unread =
+            document.querySelectorAll(
+                ".notification.unread"
+            ).length;
+
+        unreadCount.innerText = unread;
+
+        headerCount.innerText = unread;
+
+        if (unread === 0) {
+            headerCount.style.display = "none";
+        } else {
+            headerCount.style.display = "flex";
+        }
+
+    }
+
+
+    /* MARK ONE AS READ */
+
+    function markRead(button) {
+
+        const notification =
+            button.closest(".notification");
+
+        notification.classList.remove("unread");
+
+        const dot =
+            notification.querySelector(".new-dot");
+
+        if (dot) {
+            dot.remove();
+        }
+
+        updateCount();
+
+    }
+
+
+    /* MARK ALL AS READ */
+
+    function markAllRead() {
+
+        notifications.forEach(function(notification) {
+
+            notification.classList.remove("unread");
+
+            const dot =
+                notification.querySelector(".new-dot");
+
+            if (dot) {
+                dot.remove();
+            }
+
+        });
+
+        updateCount();
+
+    }
+
+
+    /* REMOVE */
+
+    function removeNotification(button) {
+
+        const notification =
+            button.closest(".notification");
+
+        notification.remove();
+
+        updateCount();
+
+        applyFilter();
+
+    }
+
+
+    /* FILTER BUTTONS */
+
+    document
+        .querySelectorAll(".filter-btn")
+        .forEach(function(button) {
+
+            button.addEventListener(
+                "click",
+                function() {
+
+                    document
+                        .querySelectorAll(".filter-btn")
+                        .forEach(function(btn) {
+
+                            btn.classList.remove("active");
+
+                        });
+
+                    this.classList.add("active");
+
+                    activeFilter =
+                        this.dataset.filter;
+
+                    applyFilter();
+
+                }
+            );
+
+        });
+
+
+    /* APPLY FILTER */
+
+    function applyFilter() {
+
+        const currentNotifications =
+            document.querySelectorAll(".notification");
+
+        let visible = 0;
+
+        currentNotifications.forEach(
+            function(notification) {
+
+                const type =
+                    notification.dataset.type;
+
+                const isUnread =
+                    notification.classList.contains(
+                        "unread"
+                    );
+
+
+                let show = false;
+
+
+                if (activeFilter === "all") {
+
+                    show = true;
+
+                }
+
+                else if (activeFilter === "unread") {
+
+                    show = isUnread;
+
+                }
+
+                else {
+
+                    show =
+                        type === activeFilter;
+
+                }
+
+
+                if (show) {
+
+                    notification.style.display =
+                        "flex";
+
+                    visible++;
+
+                }
+
+                else {
+
+                    notification.style.display =
+                        "none";
+
+                }
+
+            }
+        );
+
+
+        if (visible === 0) {
+
+            emptyState.style.display =
+                "block";
+
+        }
+
+        else {
+
+            emptyState.style.display =
+                "none";
+
+        }
+
+    }
+
+
+    /* DASHBOARD */
+
+    function goDashboard() {
+
+        window.location.href =
+            "dashboard.html";
+
+    }
+
+
+    updateCount();
+
+</script>
+
+</body>
+</html>
+

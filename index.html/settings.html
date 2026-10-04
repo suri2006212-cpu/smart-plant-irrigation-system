@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Settings | PlantFlow AI</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        body {
+            background: #06150d;
+            color: #f4fff7;
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+
+        header {
+            height: 75px;
+            padding: 0 7%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            position: sticky;
+            top: 0;
+            z-index: 100;
+
+            background: rgba(6,21,13,0.96);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .logo {
+            color: #69f09b;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        nav {
+            display: flex;
+            gap: 23px;
+        }
+
+        nav a {
+            color: #aebdb3;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: #69f09b;
+        }
+
+        .profile {
+            width: 40px;
+            height: 40px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #69f09b;
+            color: #06150d;
+
+            border-radius: 50%;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        /* HERO */
+
+        .hero {
+            padding: 70px 7% 45px;
+
+            background:
+                radial-gradient(
+                    circle at top,
+                    rgba(105,240,155,0.13),
+                    transparent 48%
+                );
+        }
+
+        .hero-content {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .badge {
+            display: inline-block;
+
+            padding: 7px 15px;
+            margin-bottom: 15px;
+
+            color: #69f09b;
+
+            border: 1px solid rgba(105,240,155,0.3);
+            border-radius: 30px;
+
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        .hero h1 {
+            font-size: 45px;
+            margin-bottom: 8px;
+        }
+
+        .hero h1 span {
+            color: #69f09b;
+        }
+
+        .hero p {
+            color: #91a197;
+            font-size: 15px;
+        }
+
+        /* MAIN */
+
+        .settings-container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 30px 20px 80px;
+
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 25px;
+        }
+
+        /* SIDEBAR */
+
+        .sidebar {
+            height: fit-content;
+
+            background: #0a1e13;
+            border: 1px solid rgba(255,255,255,0.07);
+
+            border-radius: 18px;
+            padding: 12px;
+        }
+
+        .side-btn {
+            width: 100%;
+
+            padding: 13px 14px;
+
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            border: none;
+            border-radius: 10px;
+
+            background: transparent;
+            color: #91a197;
+
+            text-align: left;
+            cursor: pointer;
+
+            font-size: 13px;
+            transition: 0.3s;
+
+            margin-bottom: 4px;
+        }
+
+        .side-btn:hover,
+        .side-btn.active {
+            background: rgba(105,240,155,0.1);
+            color: #69f09b;
+        }
+
+        /* CONTENT */
+
+        .settings-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .settings-card {
+            background: #0a1e13;
+            border: 1px solid rgba(255,255,255,0.07);
+
+            border-radius: 18px;
+            padding: 28px;
+        }
+
+        .card-header {
+            margin-bottom: 25px;
+        }
+
+        .card-header h2 {
+            font-size: 19px;
+            margin-bottom: 5px;
+        }
+
+        .card-header p {
+            color: #77877d;
+            font-size: 13px;
+        }
+
+        /* INPUT */
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .input-group {
+            margin-bottom: 3px;
+        }
+
+        label {
+            display: block;
+            color: #b8c7bd;
+            font-size: 13px;
+            margin-bottom: 7px;
+        }
+
+        input,
+        select {
+            width: 100%;
+
+            padding: 12px 13px;
+
+            background: #07180e;
+            color: white;
+
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 9px;
+
+            outline: none;
+            font-size: 13px;
+
+            transition: 0.3s;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #69f09b;
+            box-shadow: 0 0 0 3px rgba(105,240,155,0.07);
+        }
+
+        select option {
+            background: #07180e;
+        }
+
+        /* TOGGLE */
+
+        .setting-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 17px 0;
+
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .setting-row:last-child {
+            border-bottom: none;
+        }
+
+        .setting-info {
+            padding-right: 20px;
+        }
+
+        .setting-info h3 {
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .setting-info p {
+            color: #77877d;
+            font-size: 12px;
+        }
+
+        .switch {
+            position: relative;
+
+            width: 48px;
+            height: 26px;
+
+            flex-shrink: 0;
+        }
+
+        .switch input {
+            display: none;
+        }
+
+        .slider {
+            position: absolute;
+            inset: 0;
+
+            background: #1a3022;
+            border-radius: 20px;
+
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .slider:before {
+            content: "";
+
+            position: absolute;
+
+            width: 20px;
+            height: 20px;
+
+            left: 3px;
+            top: 3px;
+
+            background: #829187;
+            border-radius: 50%;
+
+            transition: 0.3s;
+        }
+
+        .switch input:checked + .slider {
+            background: #69f09b;
+        }
+
+        .switch input:checked + .slider:before {
+            transform: translateX(22px);
+            background: #06150d;
+        }
+
+        /* SAVE */
+
+        .save-area {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+
+            margin-top: 10px;
+        }
+
+        .save-btn,
+        .reset-btn {
+            padding: 11px 20px;
+
+            border-radius: 9px;
+
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .save-btn {
+            border: none;
+            background: #69f09b;
+            color: #06150d;
+        }
+
+        .reset-btn {
+            border: 1px solid rgba(255,255,255,0.1);
+            background: transparent;
+            color: #91a197;
+        }
+
+        .save-btn:hover {
+            box-shadow: 0 8px 20px rgba(105,240,155,0.18);
+        }
+
+        .reset-btn:hover {
+            color: white;
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        /* DANGER */
+
+        .danger-card {
+            border-color: rgba(255,90,90,0.18);
+        }
+
+        .danger-card h2 {
+            color: #ff8b8b;
+        }
+
+        .danger-btn {
+            margin-top: 15px;
+
+            padding: 10px 18px;
+
+            border: 1px solid rgba(255,90,90,0.3);
+            background: rgba(255,90,90,0.07);
+
+            color: #ff8b8b;
+
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .danger-btn:hover {
+            background: rgba(255,90,90,0.14);
+        }
+
+        /* STATUS */
+
+        .saved-message {
+            display: none;
+
+            padding: 12px;
+
+            background: rgba(105,240,155,0.08);
+            border: 1px solid rgba(105,240,155,0.2);
+
+            color: #69f09b;
+
+            border-radius: 9px;
+
+            text-align: center;
+            font-size: 13px;
+        }
+
+        /* FOOTER */
+
+        footer {
+            padding: 30px;
+
+            border-top: 1px solid rgba(255,255,255,0.07);
+
+            text-align: center;
+
+            color: #708078;
+            font-size: 13px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 900px) {
+
+            nav {
+                display: none;
+            }
+
+            .settings-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: flex;
+                overflow-x: auto;
+                gap: 5px;
+            }
+
+            .side-btn {
+                min-width: 150px;
+                margin: 0;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            header {
+                padding: 0 5%;
+            }
+
+            .hero {
+                padding: 60px 5% 40px;
+            }
+
+            .hero h1 {
+                font-size: 34px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .settings-card {
+                padding: 22px;
+            }
+
+            .save-area {
+                flex-direction: column;
+            }
+
+            .save-btn,
+            .reset-btn {
+                width: 100%;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+
+<!-- HEADER -->
+
+<header>
+
+    <div class="logo">
+        🌱 PlantFlow AI
+    </div>
+
+    <nav>
+
+        <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="plants.html">My Plants</a>
+        <a href="irrigation.html">Irrigation</a>
+        <a href="analytics.html">Analytics</a>
+        <a href="weather.html">Weather</a>
+        <a href="assistant.html">AI Assistant</a>
+        <a href="help.html">Help</a>
+        <a href="about.html" class="active">About</a>
+        <a href="contact.html" class="active">Contact</a>
+        <a href="faq.html" class="active">FAQ</a>
+        <a href="notifications.html">🔔 Notifications</a>
+         <a href="settings.html">⚙️ Settings</a>
+
+    </nav>
+
+    <a href="profile.html" class="profile">
+        S
+    </a>
+
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <div class="badge">
+            CONTROL CENTER
+        </div>
+
+        <h1>
+            System <span>Settings</span>
+        </h1>
+
+        <p>
+            Customize your PlantFlow AI experience,
+            irrigation preferences and notification settings.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- SETTINGS -->
+
+<div class="settings-container">
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <button
+            class="side-btn active"
+            onclick="scrollToSection('account', this)"
+        >
+            👤 Account
+        </button>
+
+        <button
+            class="side-btn"
+            onclick="scrollToSection('irrigation', this)"
+        >
+            💧 Irrigation
+        </button>
+
+        <button
+            class="side-btn"
+            onclick="scrollToSection('notifications', this)"
+        >
+            🔔 Notifications
+        </button>
+
+        <button
+            class="side-btn"
+            onclick="scrollToSection('appearance', this)"
+        >
+            🎨 Appearance
+        </button>
+
+        <button
+            class="side-btn"
+            onclick="scrollToSection('privacy', this)"
+        >
+            🔐 Privacy
+        </button>
+
+    </aside>
+
+
+    <!-- CONTENT -->
+
+    <main class="settings-content">
+
+
+        <!-- ACCOUNT -->
+
+        <section
+            class="settings-card"
+            id="account"
+        >
+
+            <div class="card-header">
+
+                <h2>
+                    👤 Account Information
+                </h2>
+
+                <p>
+                    Manage your basic profile information.
+                </p>
+
+            </div>
+
+
+            <div class="form-grid">
+
+                <div class="input-group">
+
+                    <label>
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="fullName"
+                        value="Surya S"
+                    >
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label>
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        value="surya"
+                    >
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label>
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        value="surya@example.com"
+                    >
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label>
+                        Location
+                    </label>
+
+                    <input
+                        type="text"
+                        id="location"
+                        value="Tamil Nadu, India"
+                    >
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- IRRIGATION -->
+
+        <section
+            class="settings-card"
+            id="irrigation"
+        >
+
+            <div class="card-header">
+
+                <h2>
+                    💧 Smart Irrigation
+                </h2>
+
+                <p>
+                    Configure your smart watering preferences.
+                </p>
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+
+                    <h3>
+                        Smart Water Recommendations
+                    </h3>
+
+                    <p>
+                        Automatically calculate watering
+                        recommendations for your plants.
+                    </p>
+
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="smartWater"
+                        checked
+                    >
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+
+                    <h3>
+                        Water Saving Mode
+                    </h3>
+
+                    <p>
+                        Prefer conservative water usage
+                        when generating irrigation plans.
+                    </p>
+
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="waterSaving"
+                        checked
+                    >
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+
+                    <h3>
+                        Evening Watering
+                    </h3>
+
+                    <p>
+                        Prefer evening schedules for
+                        irrigation recommendations.
+                    </p>
+
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="eveningWater"
+                        checked
+                    >
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+
+                    <h3>
+                        Weather-Based Adjustment
+                    </h3>
+
+                    <p>
+                        Adjust recommendations using
+                        available weather information.
+                    </p>
+
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="weatherAdjustment"
+                    >
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+        </section>
+
+
+        <!-- NOTIFICATIONS -->
+
+        <section
+            class="settings-card"
+            id="notifications"
+        >
+
+            <div class="card-header">
+
+                <h2>
+                    🔔 Notification Preferences
+                </h2>
+
+                <p>
+                    Choose which plant alerts you want to receive.
+                </p>
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+
+                    <h3>
+                        Irrigation Reminders
+                    </h3>
+
+                    <p>
+                        Receive reminders before watering time.
+                    </p>
+
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="irrigationReminder"
+                        checked
+                    >
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+
+                    <h3>
+                        Plant Health Alerts
+                    </h3>
+
+                    <p>
+                        Get notified when plant health
+                        requires attention.
+                    </p>
+
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="healthAlerts"
+                        checked
+                    >
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+
+                    <h3>
+                        Water Saving Reports
+                    </h3>
+
+                    <p>
+                        Receive weekly water conservation insights.
+                    </p>
+
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="savingReports"
+                        checked
+                    >
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+        </section>
+
+
+        <!-- APPEARANCE -->
+
+        <section
+            class="settings-card"
+            id="appearance"
+        >
+
+            <div class="card-header">
+
+                <h2>
+                    🎨 Appearance
+                </h2>
+
+                <p>
+                    Customize the visual experience.
+                </p>
+
+            </div>
+
+
+            <div class="form-grid">
+
+                <div class="input-group">
+
+                    <label>
+                        Theme
+                    </label>
+
+                    <select id="theme">
+
+                        <option value="dark">
+                            Dark Green
+                        </option>
+
+                        <option value="system">
+                            System Default
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label>
+                        Dashboard View
+                    </label>
+
+                    <select id="dashboardView">
+
+                        <option>
+                            Detailed
+                        </option>
+
+                        <option>
+                            Compact
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PRIVACY -->
+
+        <section
+            class="settings-card"
+            id="privacy"
+        >
+
+            <div class="card-header">
+
+                <h2>
+                    🔐 Privacy & Security
+                </h2>
+
+                <p>
+                    Control your account privacy preferences.
+                </p>
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+
+                    <h3>
+                        Profile Visibility
+                    </h3>
+
+                    <p>
+                        Keep your plant profile visible only
+                        within your account.
+                    </p>
+
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="profilePrivacy"
+                        checked
+                    >
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+
+                    <h3>
+                        Activity Tracking
+                    </h3>
+
+                    <p>
+                        Store irrigation activity for analytics.
+                    </p>
+
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="activityTracking"
+                        checked
+                    >
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+        </section>
+
+
+        <!-- SAVE -->
+
+        <div class="saved-message" id="savedMessage">
+
+            ✓ Settings saved successfully!
+
+        </div>
+
+
+        <div class="save-area">
+
+            <button
+                class="reset-btn"
+                onclick="resetSettings()"
+            >
+                Reset Changes
+            </button>
+
+            <button
+                class="save-btn"
+                onclick="saveSettings()"
+            >
+                Save Settings
+            </button>
+
+        </div>
+
+
+        <!-- DANGER -->
+
+        <section class="settings-card danger-card">
+
+            <div class="card-header">
+
+                <h2>
+                    Account Actions
+                </h2>
+
+                <p>
+                    These actions affect your current session.
+                </p>
+
+            </div>
+
+            <button
+                class="danger-btn"
+                onclick="logoutUser()"
+            >
+                Log Out
+            </button>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    © 2026 PlantFlow AI • Smart Web-Based Plant Management System
+
+</footer>
+
+
+<script>
+
+    /* SIDEBAR SCROLL */
+
+    function scrollToSection(id, button) {
+
+        document
+            .querySelectorAll(".side-btn")
+            .forEach(function(btn) {
+
+                btn.classList.remove("active");
+
+            });
+
+        button.classList.add("active");
+
+        document
+            .getElementById(id)
+            .scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+    }
+
+
+    /* SAVE SETTINGS */
+
+    function saveSettings() {
+
+        const settings = {
+
+            fullName:
+                document.getElementById("fullName").value,
+
+            username:
+                document.getElementById("username").value,
+
+            email:
+                document.getElementById("email").value,
+
+            location:
+                document.getElementById("location").value,
+
+            smartWater:
+                document.getElementById("smartWater").checked,
+
+            waterSaving:
+                document.getElementById("waterSaving").checked,
+
+            eveningWater:
+                document.getElementById("eveningWater").checked,
+
+            weatherAdjustment:
+                document.getElementById("weatherAdjustment").checked,
+
+            irrigationReminder:
+                document.getElementById("irrigationReminder").checked,
+
+            healthAlerts:
+                document.getElementById("healthAlerts").checked,
+
+            savingReports:
+                document.getElementById("savingReports").checked,
+
+            theme:
+                document.getElementById("theme").value,
+
+            dashboardView:
+                document.getElementById("dashboardView").value
+
+        };
+
+
+        localStorage.setItem(
+            "plantFlowSettings",
+            JSON.stringify(settings)
+        );
+
+
+        const message =
+            document.getElementById("savedMessage");
+
+        message.style.display = "block";
+
+
+        setTimeout(function() {
+
+            message.style.display = "none";
+
+        }, 3000);
+
+    }
+
+
+    /* LOAD SETTINGS */
+
+    function loadSettings() {
+
+        const saved =
+            localStorage.getItem(
+                "plantFlowSettings"
+            );
+
+        if (!saved) {
+            return;
+        }
+
+        const settings =
+            JSON.parse(saved);
+
+
+        if (settings.fullName !== undefined)
+            document.getElementById("fullName").value =
+                settings.fullName;
+
+        if (settings.username !== undefined)
+            document.getElementById("username").value =
+                settings.username;
+
+        if (settings.email !== undefined)
+            document.getElementById("email").value =
+                settings.email;
+
+        if (settings.location !== undefined)
+            document.getElementById("location").value =
+                settings.location;
+
+
+        const toggles = [
+
+            "smartWater",
+            "waterSaving",
+            "eveningWater",
+            "weatherAdjustment",
+            "irrigationReminder",
+            "healthAlerts",
+            "savingReports"
+
+        ];
+
+
+        toggles.forEach(function(id) {
+
+            if (settings[id] !== undefined) {
+
+                document.getElementById(id).checked =
+                    settings[id];
+
+            }
+
+        });
+
+
+        if (settings.theme !== undefined)
+            document.getElementById("theme").value =
+                settings.theme;
+
+        if (settings.dashboardView !== undefined)
+            document.getElementById("dashboardView").value =
+                settings.dashboardView;
+
+    }
+
+
+    /* RESET */
+
+    function resetSettings() {
+
+        const confirmReset =
+            confirm(
+                "Reset all settings to the default values?"
+            );
+
+        if (!confirmReset) {
+            return;
+        }
+
+        localStorage.removeItem(
+            "plantFlowSettings"
+        );
+
+        location.reload();
+
+    }
+
+
+    /* LOGOUT */
+
+    function logoutUser() {
+
+        const confirmLogout =
+            confirm(
+                "Are you sure you want to log out?"
+            );
+
+        if (!confirmLogout) {
+            return;
+        }
+
+        window.location.href =
+            "login.html";
+
+    }
+
+
+    /* INITIALIZE */
+
+    loadSettings();
+
+</script>
+
+</body>
+</html>
+

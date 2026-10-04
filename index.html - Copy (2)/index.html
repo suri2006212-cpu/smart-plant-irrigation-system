@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PlantFlow AI | Smart Irrigation</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #06150d;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* ---------- BACKGROUND ---------- */
+
+        body::before {
+            content: "";
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: #0ea34a;
+            filter: blur(180px);
+            opacity: 0.18;
+            top: -150px;
+            left: -150px;
+            z-index: -1;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            width: 450px;
+            height: 450px;
+            background: #22c55e;
+            filter: blur(200px);
+            opacity: 0.10;
+            bottom: -150px;
+            right: -100px;
+            z-index: -1;
+        }
+
+        /* ---------- NAVBAR ---------- */
+
+        header {
+            width: 100%;
+            padding: 22px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(6, 21, 13, 0.78);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: #4ade80;
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        nav a {
+            color: #b8c8bd;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #4ade80;
+        }
+
+        .nav-btn {
+            text-decoration: none;
+            color: #06150d;
+            background: #4ade80;
+            padding: 11px 20px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(74,222,128,0.25);
+        }
+
+        /* ---------- HERO ---------- */
+
+        .hero {
+            min-height: 88vh;
+            padding: 70px 7%;
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            border: 1px solid rgba(74,222,128,0.25);
+            background: rgba(74,222,128,0.08);
+            color: #86efac;
+            border-radius: 30px;
+            font-size: 12px;
+            margin-bottom: 25px;
+        }
+
+        .pulse {
+            width: 7px;
+            height: 7px;
+            background: #4ade80;
+            border-radius: 50%;
+            box-shadow: 0 0 12px #4ade80;
+        }
+
+        .hero h1 {
+            font-size: clamp(45px, 6vw, 78px);
+            line-height: 0.98;
+            letter-spacing: -4px;
+            max-width: 700px;
+        }
+
+        .hero h1 span {
+            color: #4ade80;
+        }
+
+        .hero-text {
+            color: #9eb0a4;
+            font-size: 17px;
+            line-height: 1.8;
+            max-width: 580px;
+            margin: 28px 0;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .primary {
+            border: none;
+            background: #4ade80;
+            color: #06150d;
+            padding: 15px 24px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(74,222,128,0.25);
+        }
+
+        .secondary {
+            text-decoration: none;
+            color: white;
+            border: 1px solid #263c2e;
+            padding: 15px 24px;
+            border-radius: 12px;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        .secondary:hover {
+            border-color: #4ade80;
+            color: #86efac;
+        }
+
+        /* ---------- SMART CARD ---------- */
+
+        .visual {
+            position: relative;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .plant-orb {
+            width: 360px;
+            height: 360px;
+            border-radius: 50%;
+            background:
+                radial-gradient(circle at 35% 30%, #214d31, #0b2616 60%, #06150d);
+            border: 1px solid rgba(74,222,128,0.2);
+            box-shadow:
+                0 0 100px rgba(34,197,94,0.13),
+                inset 0 0 60px rgba(34,197,94,0.08);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            animation: float 5s ease-in-out infinite;
+        }
+
+        .plant {
+            font-size: 155px;
+            filter: drop-shadow(0 20px 20px rgba(0,0,0,0.4));
+        }
+
+        @keyframes float {
+            0%,100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+        .data-card {
+            position: absolute;
+            background: rgba(12,35,21,0.88);
+            border: 1px solid rgba(255,255,255,0.08);
+            backdrop-filter: blur(15px);
+            border-radius: 15px;
+            padding: 15px 18px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+        }
+
+        .data-card small {
+            display: block;
+            color: #7f9587;
+            font-size: 11px;
+            margin-bottom: 5px;
+        }
+
+        .data-card strong {
+            font-size: 16px;
+        }
+
+        .water-card {
+            left: 0;
+            top: 100px;
+        }
+
+        .health-card {
+            right: 0;
+            top: 50px;
+        }
+
+        .schedule-card {
+            right: 15px;
+            bottom: 70px;
+        }
+
+        .green {
+            color: #4ade80;
+        }
+
+        /* ---------- QUICK STATS ---------- */
+
+        .stats {
+            padding: 0 7% 70px;
+        }
+
+        .stats-box {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            background: rgba(255,255,255,0.035);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 22px;
+            overflow: hidden;
+        }
+
+        .stat {
+            padding: 28px;
+            border-right: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .stat:last-child {
+            border-right: none;
+        }
+
+        .stat h2 {
+            color: #86efac;
+            font-size: 30px;
+            margin-bottom: 5px;
+        }
+
+        .stat p {
+            color: #829589;
+            font-size: 13px;
+        }
+
+        /* ---------- FEATURES ---------- */
+
+        .features {
+            padding: 90px 7%;
+            background: rgba(255,255,255,0.015);
+        }
+
+        .section-label {
+            color: #4ade80;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: 42px;
+            letter-spacing: -2px;
+            margin-bottom: 45px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .feature {
+            padding: 30px;
+            background: rgba(255,255,255,0.035);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 20px;
+            transition: 0.35s;
+        }
+
+        .feature:hover {
+            transform: translateY(-7px);
+            border-color: rgba(74,222,128,0.35);
+            background: rgba(74,222,128,0.05);
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            display: grid;
+            place-items: center;
+            background: rgba(74,222,128,0.1);
+            border-radius: 14px;
+            font-size: 24px;
+            margin-bottom: 22px;
+        }
+
+        .feature h3 {
+            margin-bottom: 12px;
+        }
+
+        .feature p {
+            color: #819286;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        /* ---------- CTA ---------- */
+
+        .cta {
+            margin: 80px 7%;
+            padding: 70px;
+            text-align: center;
+            border-radius: 30px;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(74,222,128,0.13),
+                    rgba(20,83,45,0.18)
+                );
+            border: 1px solid rgba(74,222,128,0.15);
+        }
+
+        .cta h2 {
+            font-size: 42px;
+            margin-bottom: 14px;
+        }
+
+        .cta p {
+            color: #9aac9f;
+            margin-bottom: 25px;
+        }
+
+        /* ---------- FOOTER ---------- */
+
+        footer {
+            padding: 35px 7%;
+            display: flex;
+            justify-content: space-between;
+            color: #66776c;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            font-size: 13px;
+        }
+
+        /* ---------- RESPONSIVE ---------- */
+
+        @media (max-width: 900px) {
+
+            nav {
+                display: none;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-text {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .buttons {
+                justify-content: center;
+            }
+
+            .visual {
+                min-height: 430px;
+            }
+
+            .stats-box {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stat:nth-child(2) {
+                border-right: none;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            header {
+                padding: 18px 5%;
+            }
+
+            .nav-btn {
+                display: none;
+            }
+
+            .hero {
+                padding: 55px 5%;
+            }
+
+            .hero h1 {
+                letter-spacing: -2px;
+            }
+
+            .plant-orb {
+                width: 280px;
+                height: 280px;
+            }
+
+            .plant {
+                font-size: 110px;
+            }
+
+            .data-card {
+                padding: 10px 12px;
+            }
+
+            .water-card {
+                left: 0;
+            }
+
+            .health-card {
+                right: 0;
+            }
+
+            .stats {
+                padding-left: 5%;
+                padding-right: 5%;
+            }
+
+            .stats-box {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .stat {
+                padding: 20px;
+            }
+
+            .features {
+                padding: 70px 5%;
+            }
+
+            .section-title {
+                font-size: 34px;
+            }
+
+            .cta {
+                margin: 50px 5%;
+                padding: 45px 20px;
+            }
+
+            .cta h2 {
+                font-size: 32px;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+
+    <header>
+
+        <div class="logo">
+            🌱 PlantFlow <span>AI</span>
+        </div>
+
+        <nav>
+        <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="plants.html">My Plants</a>
+        <a href="irrigation.html">Irrigation</a>
+        <a href="analytics.html">Analytics</a>
+        <a href="weather.html">Weather</a>
+        <a href="assistant.html">AI Assistant</a>
+        <a href="help.html">Help</a>
+        <a href="about.html" class="active">About</a>
+        <a href="contact.html" class="active">Contact</a>
+         <a href="settings.html">⚙️ Settings</a>
+        </nav>
+
+        <a href="#start" class="nav-btn">
+            Launch App →
+        </a>
+
+    </header>
+
+
+    <!-- HERO -->
+
+    <main id="home">
+
+        <section class="hero">
+
+            <div>
+
+                <div class="badge">
+                    <span class="pulse"></span>
+                    SMART PLANT MANAGEMENT PLATFORM
+                </div>
+
+                <h1>
+                    Water Less.<br>
+                    <span>Grow More.</span>
+                </h1>
+
+                <p class="hero-text">
+                    A next-generation web application that helps you
+                    plan plant irrigation, understand watering needs,
+                    track water consumption and build better plant-care
+                    habits — without any hardware.
+                </p>
+
+                <div class="buttons">
+
+                    <button class="primary" onclick="launchApp()">
+                        🌱 Start Smart Care
+                    </button>
+
+                    <a href="#features" class="secondary">
+                        Explore System
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- ANIMATED PLANT -->
+
+            <div class="visual">
+
+                <div class="plant-orb">
+                    <div class="plant">🌿</div>
+                </div>
+
+                <div class="data-card water-card">
+                    <small>Today's Water Plan</small>
+                    <strong class="green">750 ml</strong>
+                </div>
+
+                <div class="data-card health-card">
+                    <small>Plant Health</small>
+                    <strong>🌱 Excellent</strong>
+                </div>
+
+                <div class="data-card schedule-card">
+                    <small>Next Irrigation</small>
+                    <strong>Today • 6:00 PM</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- STATS -->
+
+        <section class="stats">
+
+            <div class="stats-box">
+
+                <div class="stat">
+                    <h2>24+</h2>
+                    <p>Plant Categories</p>
+                </div>
+
+                <div class="stat">
+                    <h2>30%</h2>
+                    <p>Potential Water Saving</p>
+                </div>
+
+                <div class="stat">
+                    <h2>12</h2>
+                    <p>Plants Managed</p>
+                </div>
+
+                <div class="stat">
+                    <h2>24/7</h2>
+                    <p>Web Access</p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FEATURES -->
+
+        <section class="features" id="features">
+
+            <div class="section-label">
+                SMART FEATURES
+            </div>
+
+            <h2 class="section-title">
+                Everything your plants need.
+            </h2>
+
+
+            <div class="feature-grid">
+
+                <div class="feature">
+
+                    <div class="feature-icon">💧</div>
+
+                    <h3>Smart Irrigation</h3>
+
+                    <p>
+                        Create personalized watering plans
+                        according to plant type, soil and
+                        care requirements.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">📅</div>
+
+                    <h3>Watering Schedule</h3>
+
+                    <p>
+                        Organize daily and weekly irrigation
+                        activities with a simple visual schedule.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">🌦️</div>
+
+                    <h3>Weather Intelligence</h3>
+
+                    <p>
+                        Combine weather information with your
+                        irrigation plan to avoid unnecessary watering.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">🌱</div>
+
+                    <h3>Plant Profiles</h3>
+
+                    <p>
+                        Maintain individual profiles containing
+                        plant type, soil, sunlight and water needs.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">📊</div>
+
+                    <h3>Water Analytics</h3>
+
+                    <p>
+                        Visualize water consumption and identify
+                        opportunities to reduce unnecessary usage.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">🤖</div>
+
+                    <h3>Smart Assistant</h3>
+
+                    <p>
+                        Get simple plant-care recommendations
+                        based on the information you provide.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CTA -->
+
+        <section class="cta" id="start">
+
+            <h2>
+                Your plants deserve smarter care. 🌱
+            </h2>
+
+            <p>
+                Start building your personalized irrigation plan today.
+            </p>
+
+            <button class="primary" onclick="launchApp()">
+                Launch PlantFlow AI →
+            </button>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer id="about">
+
+        <div>
+            © 2026 PlantFlow AI
+        </div>
+
+        <div>
+            Smart • Sustainable • Web Based
+        </div>
+
+    </footer>
+
+
+    <script>
+
+        function launchApp() {
+
+            alert(
+                "🌱 Welcome to PlantFlow AI!\n\n" +
+                "Your smart irrigation dashboard is ready."
+            );
+
+        }
+
+    </script>
+
+</body>
+</html>
+
+
+

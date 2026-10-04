@@ -1,0 +1,1182 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FAQ | PlantFlow AI</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        body {
+            background: #06150d;
+            color: #f4fff7;
+            line-height: 1.6;
+        }
+
+        /* HEADER */
+
+        header {
+            height: 75px;
+            padding: 0 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            position: sticky;
+            top: 0;
+            z-index: 100;
+
+            background: rgba(6,21,13,0.96);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .logo {
+            color: #69f09b;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #aebdb3;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: #69f09b;
+        }
+
+        .profile {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #69f09b;
+            color: #06150d;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        /* HERO */
+
+        .hero {
+            text-align: center;
+            padding: 85px 7% 60px;
+
+            background:
+                radial-gradient(
+                    circle at top,
+                    rgba(105,240,155,0.14),
+                    transparent 48%
+                );
+        }
+
+        .badge {
+            display: inline-block;
+
+            padding: 7px 15px;
+            margin-bottom: 18px;
+
+            color: #69f09b;
+            border: 1px solid rgba(105,240,155,0.3);
+            border-radius: 30px;
+
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        .hero h1 {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        .hero h1 span {
+            color: #69f09b;
+        }
+
+        .hero p {
+            max-width: 680px;
+            margin: auto;
+
+            color: #9eafa4;
+            font-size: 16px;
+        }
+
+        /* SEARCH */
+
+        .search-area {
+            max-width: 750px;
+            margin: -5px auto 50px;
+            padding: 0 20px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            padding: 5px 8px 5px 18px;
+
+            background: #0a1e13;
+            border: 1px solid rgba(105,240,155,0.2);
+            border-radius: 14px;
+
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+        }
+
+        .search-icon {
+            font-size: 20px;
+        }
+
+        .search-box input {
+            flex: 1;
+
+            border: none;
+            outline: none;
+
+            background: transparent;
+            color: white;
+
+            padding: 13px 5px;
+            font-size: 14px;
+        }
+
+        .search-box input::placeholder {
+            color: #65746b;
+        }
+
+        .clear-btn {
+            display: none;
+
+            border: none;
+            background: #163522;
+            color: #69f09b;
+
+            padding: 9px 13px;
+            border-radius: 8px;
+
+            cursor: pointer;
+        }
+
+        /* CATEGORIES */
+
+        .categories {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+
+            padding: 0 7% 45px;
+        }
+
+        .category {
+            border: 1px solid rgba(255,255,255,0.08);
+
+            background: #0a1e13;
+            color: #9eafa4;
+
+            padding: 9px 17px;
+            border-radius: 30px;
+
+            cursor: pointer;
+            transition: 0.3s;
+
+            font-size: 13px;
+        }
+
+        .category:hover,
+        .category.active {
+            background: #69f09b;
+            color: #06150d;
+            border-color: #69f09b;
+        }
+
+        /* FAQ */
+
+        .faq-section {
+            max-width: 950px;
+            margin: auto;
+            padding: 10px 20px 80px;
+        }
+
+        .faq-count {
+            color: #77877d;
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .faq-item {
+            background: #0a1e13;
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 15px;
+
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .faq-item:hover {
+            border-color: rgba(105,240,155,0.25);
+        }
+
+        .faq-question {
+            width: 100%;
+
+            padding: 20px 22px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            background: transparent;
+            border: none;
+
+            color: #f1fff5;
+            text-align: left;
+
+            font-size: 15px;
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        .arrow {
+            width: 30px;
+            height: 30px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 8px;
+
+            background: rgba(105,240,155,0.08);
+            color: #69f09b;
+
+            font-size: 18px;
+
+            transition: 0.3s;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+
+            transition: max-height 0.35s ease;
+        }
+
+        .faq-answer p {
+            padding: 0 22px 20px;
+
+            color: #91a197;
+            font-size: 14px;
+        }
+
+        .faq-item.open {
+            border-color: rgba(105,240,155,0.3);
+        }
+
+        .faq-item.open .faq-answer {
+            max-height: 200px;
+        }
+
+        .faq-item.open .arrow {
+            transform: rotate(180deg);
+            background: #69f09b;
+            color: #06150d;
+        }
+
+        /* NO RESULT */
+
+        .no-result {
+            display: none;
+
+            text-align: center;
+            padding: 50px 20px;
+
+            background: #0a1e13;
+            border-radius: 18px;
+
+            border: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .no-result .icon {
+            font-size: 45px;
+            margin-bottom: 10px;
+        }
+
+        .no-result h3 {
+            margin-bottom: 7px;
+        }
+
+        .no-result p {
+            color: #829187;
+            font-size: 14px;
+        }
+
+        /* CTA */
+
+        .cta {
+            padding: 75px 7%;
+            text-align: center;
+
+            background:
+                linear-gradient(
+                    120deg,
+                    rgba(105,240,155,0.08),
+                    transparent
+                );
+        }
+
+        .cta h2 {
+            font-size: 34px;
+            margin-bottom: 10px;
+        }
+
+        .cta p {
+            color: #91a197;
+            margin-bottom: 22px;
+        }
+
+        .cta button {
+            border: none;
+
+            background: #69f09b;
+            color: #06150d;
+
+            padding: 13px 25px;
+            border-radius: 10px;
+
+            font-weight: 700;
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .cta button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(105,240,155,0.2);
+        }
+
+        /* FOOTER */
+
+        footer {
+            text-align: center;
+
+            padding: 30px;
+
+            border-top: 1px solid rgba(255,255,255,0.07);
+
+            color: #708078;
+            font-size: 13px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 850px) {
+
+            nav {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            header {
+                padding: 0 5%;
+            }
+
+            .hero {
+                padding: 65px 5% 50px;
+            }
+
+            .hero h1 {
+                font-size: 34px;
+            }
+
+            .faq-section {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+
+            .faq-question {
+                font-size: 14px;
+                padding: 17px;
+            }
+
+            .faq-answer p {
+                padding-left: 17px;
+                padding-right: 17px;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+
+<!-- HEADER -->
+
+<header>
+
+    <div class="logo">
+        🌱 PlantFlow AI
+    </div>
+
+    <nav>
+
+        <a href="index.html">Home</a>
+
+        <a href="dashboard.html">Dashboard</a>
+
+        <a href="plants.html">My Plants</a>
+
+        <a href="irrigation.html">Irrigation</a>
+
+        <a href="analytics.html">Analytics</a>
+        <a href="weather.html">Weather</a>
+        <a href="assistant.html">AI Assistant</a>
+        <a href="help.html">Help</a>
+        
+
+        <a href="about.html">About</a>
+
+        <a href="contact.html">Contact</a>
+
+        <a href="faq.html" class="active">FAQ</a>
+        <a href="notifications.html">🔔 Notifications</a>
+        <a href="settings.html">⚙️ Settings</a>
+    </nav>
+
+    <a href="profile.html" class="profile">
+        S
+    </a>
+
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="badge">
+        HELP CENTER
+    </div>
+
+    <h1>
+        Frequently Asked
+        <span>Questions</span>
+    </h1>
+
+    <p>
+        Find quick answers about PlantFlow AI,
+        smart irrigation, plant management and water analytics.
+    </p>
+
+</section>
+
+
+<!-- SEARCH -->
+
+<div class="search-area">
+
+    <div class="search-box">
+
+        <span class="search-icon">🔍</span>
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search your question..."
+        >
+
+        <button
+            class="clear-btn"
+            id="clearBtn"
+            onclick="clearSearch()"
+        >
+            Clear
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- CATEGORIES -->
+
+<div class="categories">
+
+    <button
+        class="category active"
+        data-category="all"
+    >
+        All
+    </button>
+
+    <button
+        class="category"
+        data-category="general"
+    >
+        General
+    </button>
+
+    <button
+        class="category"
+        data-category="plants"
+    >
+        Plants
+    </button>
+
+    <button
+        class="category"
+        data-category="irrigation"
+    >
+        Irrigation
+    </button>
+
+    <button
+        class="category"
+        data-category="analytics"
+    >
+        Analytics
+    </button>
+
+    <button
+        class="category"
+        data-category="technology"
+    >
+        Technology
+    </button>
+
+</div>
+
+
+<!-- FAQ -->
+
+<section class="faq-section">
+
+    <div class="faq-count" id="faqCount">
+        Showing 12 questions
+    </div>
+
+
+    <div class="faq-list" id="faqList">
+
+
+        <!-- 01 -->
+
+        <div class="faq-item" data-category="general">
+
+            <button class="faq-question">
+
+                <span>
+                    What is PlantFlow AI?
+                </span>
+
+                <span class="arrow">
+                    ↓
+                </span>
+
+            </button>
+
+            <div class="faq-answer">
+
+                <p>
+                    PlantFlow AI is a web-based smart plant management
+                    system that helps users plan irrigation, manage plants,
+                    monitor water usage and understand plant performance.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- 02 -->
+
+        <div class="faq-item" data-category="technology">
+
+            <button class="faq-question">
+
+                <span>
+                    Does PlantFlow AI require physical sensors?
+                </span>
+
+                <span class="arrow">
+                    ↓
+                </span>
+
+            </button>
+
+            <div class="faq-answer">
+
+                <p>
+                    No. This project is designed as a web-based system.
+                    It does not require Arduino, soil moisture sensors
+                    or other physical hardware.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- 03 -->
+
+        <div class="faq-item" data-category="plants">
+
+            <button class="faq-question">
+
+                <span>
+                    How can I add a new plant?
+                </span>
+
+                <span class="arrow">
+                    ↓
+                </span>
+
+            </button>
+
+            <div class="faq-answer">
+
+                <p>
+                    Open the My Plants page and select Add Plant.
+                    Enter the plant information and save the profile.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- 04 -->
+
+        <div class="faq-item" data-category="irrigation">
+
+            <button class="faq-question">
+
+                <span>
+                    How does the irrigation recommendation work?
+                </span>
+
+                <span class="arrow">
+                    ↓
+                </span>
+
+            </button>
+
+            <div class="faq-answer">
+
+                <p>
+                    The recommendation considers plant type, soil type,
+                    sunlight, plant condition and pot size to estimate
+                    a suitable watering quantity and schedule.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- 05 -->
+
+        <div class="faq-item" data-category="irrigation">
+
+            <button class="faq-question">
+
+                <span>
+                    Can I change the watering time?
+                </span>
+
+                <span class="arrow">
+                    ↓
+                </span>
+
+            </button>
+
+            <div class="faq-answer">
+
+                <p>
+                    Yes. The irrigation planner provides preferred
+                    watering time options so users can select a
+                    suitable schedule.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- 06 -->
+
+        <div class="faq-item" data-category="plants">
+
+            <button class="faq-question">
+
+                <span>
+                    Can I manage multiple plants?
+                </span>
+
+                <span class="arrow">
+                    ↓
+                </span>
+
+            </button>
+
+            <div class="faq-answer">
+
+                <p>
+                    Yes. PlantFlow AI is designed to manage multiple
+                    plant profiles with individual watering requirements.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- 07 -->
+
+        <div class="faq-item" data-category="analytics">
+
+            <button class="faq-question">
+
+                <span>
+                    What can I see on the Analytics page?
+                </span>
+
+                <span class="arrow">
+                    ↓
+                </span>
+
+            </button>
+
+            <div class="faq-answer">
+
+                <p>
+                    The Analytics page can display water usage,
+                    estimated savings, plant health and irrigation
+                    history.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- 08 -->
+
+        <div class="faq-item" data-category="analytics">
+
+            <button class="faq-question">
+
+                <span>
+                    How does the system show water savings?
+                </span>
+
+                <span class="arrow">
+                    ↓
+                </span>
+
+            </button>
+
+            <div class="faq-answer">
+
+                <p>
+                    The system compares estimated optimized usage
+                    with a reference usage level and displays the
+                    difference as potential water savings.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- 09 -->
+
+        <div class="faq-item" data-category="technology">
+
+            <button class="faq-question">
+
+                <span>
+                    Which technologies are used?
+                </span>
+
+                <span class="arrow">
+                    ↓
+                </span>
+
+            </button>
+
+            <div class="faq-answer">
+
+                <p>
+                    The current interface uses HTML5, CSS3 and
+                    JavaScript. Weather API, Java, Spring Boot and
+                    MySQL can be integrated as future enhancements.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- 10 -->
+
+        <div class="faq-item" data-category="technology">
+
+            <button class="faq-question">
+
+                <span>
+                    Can weather data be integrated?
+                </span>
+
+                <span class="arrow">
+                    ↓
+                </span>
+
+            </button>
+
+            <div class="faq-answer">
+
+                <p>
+                    Yes. A weather API can be connected to use
+                    temperature, rainfall and other weather information
+                    for improved irrigation recommendations.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- 11 -->
+
+        <div class="faq-item" data-category="general">
+
+            <button class="faq-question">
+
+                <span>
+                    Can I use PlantFlow AI on mobile?
+                </span>
+
+                <span class="arrow">
+                    ↓
+                </span>
+
+            </button>
+
+            <div class="faq-answer">
+
+                <p>
+                    Yes. The interface is responsive and designed
+                    to work on desktop, tablet and mobile screens.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- 12 -->
+
+        <div class="faq-item" data-category="general">
+
+            <button class="faq-question">
+
+                <span>
+                    Is PlantFlow AI suitable for a college project?
+                </span>
+
+                <span class="arrow">
+                    ↓
+                </span>
+
+            </button>
+
+            <div class="faq-answer">
+
+                <p>
+                    Yes. The project demonstrates web development,
+                    JavaScript logic, data visualization, smart
+                    recommendations and water-management concepts.
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- NO RESULT -->
+
+    <div class="no-result" id="noResult">
+
+        <div class="icon">
+            🌱
+        </div>
+
+        <h3>
+            No questions found
+        </h3>
+
+        <p>
+            Try another keyword or select a different category.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- CTA -->
+
+<section class="cta">
+
+    <h2>
+        Still have a question?
+    </h2>
+
+    <p>
+        Our contact page is ready for your questions and feedback.
+    </p>
+
+    <button onclick="goContact()">
+        Contact Support →
+    </button>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    © 2026 PlantFlow AI • Smart Web-Based Plant Management System
+
+</footer>
+
+
+<script>
+
+    /* FAQ OPEN / CLOSE */
+
+    const questions =
+        document.querySelectorAll(".faq-question");
+
+    questions.forEach(function(question) {
+
+        question.addEventListener("click", function() {
+
+            const currentItem =
+                this.parentElement;
+
+            document
+                .querySelectorAll(".faq-item")
+                .forEach(function(item) {
+
+                    if (item !== currentItem) {
+                        item.classList.remove("open");
+                    }
+
+                });
+
+            currentItem.classList.toggle("open");
+
+        });
+
+    });
+
+
+    /* SEARCH */
+
+    const searchInput =
+        document.getElementById("searchInput");
+
+    const clearBtn =
+        document.getElementById("clearBtn");
+
+    const faqItems =
+        document.querySelectorAll(".faq-item");
+
+    const faqCount =
+        document.getElementById("faqCount");
+
+    const noResult =
+        document.getElementById("noResult");
+
+
+    let activeCategory = "all";
+
+
+    function filterFAQs() {
+
+        const searchText =
+            searchInput.value.toLowerCase().trim();
+
+        let visibleCount = 0;
+
+
+        faqItems.forEach(function(item) {
+
+            const question =
+                item.querySelector(".faq-question")
+                .innerText
+                .toLowerCase();
+
+            const answer =
+                item.querySelector(".faq-answer")
+                .innerText
+                .toLowerCase();
+
+            const category =
+                item.dataset.category;
+
+
+            const matchesSearch =
+                question.includes(searchText) ||
+                answer.includes(searchText);
+
+            const matchesCategory =
+                activeCategory === "all" ||
+                category === activeCategory;
+
+
+            if (matchesSearch && matchesCategory) {
+
+                item.style.display = "block";
+                visibleCount++;
+
+            } else {
+
+                item.style.display = "none";
+                item.classList.remove("open");
+
+            }
+
+        });
+
+
+        faqCount.innerText =
+            "Showing " +
+            visibleCount +
+            " question" +
+            (visibleCount !== 1 ? "s" : "");
+
+
+        if (visibleCount === 0) {
+
+            noResult.style.display = "block";
+
+        } else {
+
+            noResult.style.display = "none";
+
+        }
+
+
+        clearBtn.style.display =
+            searchText ? "block" : "none";
+
+    }
+
+
+    searchInput.addEventListener(
+        "input",
+        filterFAQs
+    );
+
+
+    /* CATEGORY FILTER */
+
+    document
+        .querySelectorAll(".category")
+        .forEach(function(button) {
+
+            button.addEventListener(
+                "click",
+                function() {
+
+                    document
+                        .querySelectorAll(".category")
+                        .forEach(function(btn) {
+
+                            btn.classList.remove("active");
+
+                        });
+
+                    this.classList.add("active");
+
+                    activeCategory =
+                        this.dataset.category;
+
+                    filterFAQs();
+
+                }
+            );
+
+        });
+
+
+    /* CLEAR SEARCH */
+
+    function clearSearch() {
+
+        searchInput.value = "";
+
+        filterFAQs();
+
+        searchInput.focus();
+
+    }
+
+
+    /* CONTACT */
+
+    function goContact() {
+
+        window.location.href =
+            "contact.html";
+
+    }
+
+</script>
+
+</body>
+</html>
+

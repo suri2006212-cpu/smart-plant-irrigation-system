@@ -1,0 +1,1003 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Plant Assistant | PlantFlow AI</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        body {
+            background: #06150d;
+            color: #effff4;
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+        header {
+            height: 72px;
+            padding: 0 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(6, 21, 13, .95);
+            border-bottom: 1px solid rgba(105,240,155,.12);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            color: #69f09b;
+            font-size: 21px;
+            font-weight: 700;
+        }
+
+        nav {
+            display: flex;
+            gap: 23px;
+        }
+
+        nav a {
+            color: #8fa997;
+            text-decoration: none;
+            font-size: 14px;
+            transition: .3s;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: #69f09b;
+        }
+
+        .profile {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #173d26;
+            color: #69f09b;
+            display: grid;
+            place-items: center;
+            font-weight: bold;
+        }
+
+        /* HERO */
+        .hero {
+            text-align: center;
+            padding: 55px 20px 35px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 30px;
+            color: #69f09b;
+            background: rgba(105,240,155,.08);
+            border: 1px solid rgba(105,240,155,.2);
+            font-size: 12px;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        .hero h1 span {
+            color: #69f09b;
+        }
+
+        .hero p {
+            max-width: 650px;
+            margin: auto;
+            color: #91a99a;
+            line-height: 1.7;
+        }
+
+        /* MAIN */
+        .container {
+            width: 88%;
+            max-width: 1150px;
+            margin: auto;
+        }
+
+        .assistant-layout {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 22px;
+            margin-bottom: 45px;
+        }
+
+        /* CHAT */
+        .chat-container {
+            background: #0c2316;
+            border: 1px solid rgba(105,240,155,.14);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,.25);
+        }
+
+        .chat-top {
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+            background: #0e2919;
+        }
+
+        .ai-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 15px;
+            background: #173d26;
+            display: grid;
+            place-items: center;
+            font-size: 25px;
+        }
+
+        .chat-top h3 {
+            font-size: 17px;
+        }
+
+        .status {
+            color: #69f09b;
+            font-size: 12px;
+            margin-top: 3px;
+        }
+
+        .chat-area {
+            height: 430px;
+            padding: 25px;
+            overflow-y: auto;
+        }
+
+        .message {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .small-avatar {
+            width: 32px;
+            height: 32px;
+            flex-shrink: 0;
+            border-radius: 10px;
+            background: #173d26;
+            display: grid;
+            place-items: center;
+            font-size: 15px;
+        }
+
+        .bubble {
+            max-width: 75%;
+            padding: 13px 16px;
+            border-radius: 16px;
+            background: #102d1b;
+            color: #d5ebdc;
+            line-height: 1.55;
+            font-size: 14px;
+        }
+
+        .user .bubble {
+            background: #69f09b;
+            color: #06200e;
+        }
+
+        .time {
+            display: block;
+            font-size: 10px;
+            margin-top: 5px;
+            opacity: .55;
+        }
+
+        .input-area {
+            padding: 18px;
+            border-top: 1px solid rgba(255,255,255,.06);
+            display: flex;
+            gap: 10px;
+        }
+
+        .input-area input {
+            flex: 1;
+            padding: 14px 16px;
+            background: #081b10;
+            border: 1px solid #254c32;
+            border-radius: 13px;
+            color: white;
+            outline: none;
+        }
+
+        .input-area input:focus {
+            border-color: #69f09b;
+        }
+
+        .send {
+            border: none;
+            background: #69f09b;
+            color: #06200e;
+            padding: 0 20px;
+            border-radius: 13px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* SIDE PANEL */
+        .side-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .panel {
+            background: #0c2316;
+            border: 1px solid rgba(105,240,155,.12);
+            border-radius: 20px;
+            padding: 20px;
+        }
+
+        .panel h3 {
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .suggestion {
+            padding: 12px;
+            background: #102b1a;
+            border-radius: 12px;
+            margin-bottom: 9px;
+            color: #a7c0ae;
+            font-size: 13px;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .suggestion:hover {
+            background: #173d26;
+            color: #69f09b;
+            transform: translateX(3px);
+        }
+
+        .plant-status {
+            display: flex;
+            justify-content: space-between;
+            padding: 11px 0;
+            border-bottom: 1px solid rgba(255,255,255,.05);
+            font-size: 13px;
+        }
+
+        .plant-status:last-child {
+            border-bottom: none;
+        }
+
+        .healthy {
+            color: #69f09b;
+        }
+
+        .warning {
+            color: #f5c76b;
+        }
+
+        /* AI FEATURES */
+        .section-title {
+            margin-bottom: 20px;
+        }
+
+        .section-title h2 {
+            font-size: 25px;
+        }
+
+        .section-title p {
+            color: #849b8c;
+            margin-top: 6px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 45px;
+        }
+
+        .feature {
+            background: #0c2316;
+            border: 1px solid rgba(105,240,155,.1);
+            padding: 23px;
+            border-radius: 18px;
+            transition: .3s;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+            border-color: rgba(105,240,155,.35);
+        }
+
+        .feature-icon {
+            font-size: 28px;
+            margin-bottom: 13px;
+        }
+
+        .feature h3 {
+            margin-bottom: 8px;
+        }
+
+        .feature p {
+            color: #8da596;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* CTA */
+        .cta {
+            text-align: center;
+            background: linear-gradient(135deg,#102f1b,#0b1d12);
+            border: 1px solid rgba(105,240,155,.15);
+            border-radius: 22px;
+            padding: 35px;
+            margin-bottom: 45px;
+        }
+
+        .cta h2 {
+            margin-bottom: 9px;
+        }
+
+        .cta p {
+            color: #8fa697;
+            margin-bottom: 18px;
+        }
+
+        .cta button {
+            padding: 13px 23px;
+            border: none;
+            border-radius: 12px;
+            background: #69f09b;
+            color: #06200e;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #617769;
+            border-top: 1px solid rgba(255,255,255,.05);
+            font-size: 13px;
+        }
+
+        /* RESPONSIVE */
+        @media(max-width: 900px) {
+            nav {
+                display: none;
+            }
+
+            .assistant-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media(max-width: 550px) {
+            .hero h1 {
+                font-size: 31px;
+            }
+
+            .container {
+                width: 92%;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chat-area {
+                height: 380px;
+            }
+
+            .input-area {
+                flex-direction: column;
+            }
+
+            .send {
+                padding: 12px;
+            }
+
+            .bubble {
+                max-width: 85%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">🌱 PlantFlow AI</div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="plants.html">My Plants</a>
+        <a href="irrigation.html">Irrigation</a>
+        <a href="analytics.html">Analytics</a>
+        <a href="weather.html">Weather</a>
+        <a href="assistant.html" class="active">AI Assistant</a>
+        <a href="help.html">Help</a>
+        <a href="about.html" class="active">About</a>
+        <a href="contact.html" class="active">Contact</a>
+        <a href="notifications.html">🔔 Notifications</a>
+        <a href="settings.html">⚙️ Settings</a>
+        
+    </nav>
+
+    <div class="profile">S</div>
+
+</header>
+
+
+<section class="hero">
+
+    <div class="badge">🤖 AI-POWERED PLANT CARE</div>
+
+    <h1>Your <span>Smart Plant</span> Assistant</h1>
+
+    <p>
+        Ask questions about your plants, watering schedules,
+        irrigation plans and water conservation.
+    </p>
+
+</section>
+
+
+<div class="container">
+
+    <section class="assistant-layout">
+
+        <!-- CHAT -->
+        <div class="chat-container">
+
+            <div class="chat-top">
+
+                <div class="ai-avatar">🤖</div>
+
+                <div>
+                    <h3>PlantFlow AI Assistant</h3>
+                    <div class="status">● Ready to assist</div>
+                </div>
+
+            </div>
+
+
+            <div class="chat-area" id="chatArea">
+
+                <div class="message">
+
+                    <div class="small-avatar">🤖</div>
+
+                    <div class="bubble">
+                        Hello Surya! 👋<br><br>
+
+                        I'm your PlantFlow AI Assistant.
+                        I can help you understand plant watering,
+                        irrigation schedules, plant health and
+                        water-saving strategies.
+
+                        <span class="time">Now</span>
+                    </div>
+
+                </div>
+
+
+                <div class="message">
+
+                    <div class="small-avatar">🌱</div>
+
+                    <div class="bubble">
+                        Try asking:<br>
+                        • How much water does a tomato need?<br>
+                        • How can I save water?<br>
+                        • Why is my plant health low?
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="input-area">
+
+                <input
+                    type="text"
+                    id="question"
+                    placeholder="Ask your plant question..."
+                    onkeydown="handleEnter(event)"
+                >
+
+                <button class="send" onclick="sendQuestion()">
+                    Send ➤
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- SIDE PANEL -->
+        <aside class="side-panel">
+
+            <div class="panel">
+
+                <h3>⚡ Suggested Questions</h3>
+
+                <div
+                    class="suggestion"
+                    onclick="askSuggested('How much water does a tomato need?')">
+                    🍅 Tomato watering
+                </div>
+
+                <div
+                    class="suggestion"
+                    onclick="askSuggested('How can I save water?')">
+                    💧 Save more water
+                </div>
+
+                <div
+                    class="suggestion"
+                    onclick="askSuggested('Why is my plant health low?')">
+                    🌿 Plant health
+                </div>
+
+                <div
+                    class="suggestion"
+                    onclick="askSuggested('When should I water my plants?')">
+                    🕐 Watering time
+                </div>
+
+                <div
+                    class="suggestion"
+                    onclick="askSuggested('What is smart irrigation?')">
+                    ⚙️ Smart irrigation
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <h3>🌿 Plant Overview</h3>
+
+                <div class="plant-status">
+                    <span>🌹 Rose</span>
+                    <span class="healthy">95%</span>
+                </div>
+
+                <div class="plant-status">
+                    <span>🍅 Tomato</span>
+                    <span class="healthy">91%</span>
+                </div>
+
+                <div class="plant-status">
+                    <span>🌿 Mint</span>
+                    <span class="healthy">94%</span>
+                </div>
+
+                <div class="plant-status">
+                    <span>🌵 Aloe Vera</span>
+                    <span class="healthy">98%</span>
+                </div>
+
+                <div class="plant-status">
+                    <span>🌱 Basil</span>
+                    <span class="warning">89%</span>
+                </div>
+
+            </div>
+
+        </aside>
+
+    </section>
+
+
+    <!-- AI FEATURES -->
+
+    <div class="section-title">
+
+        <h2>What Can PlantFlow AI Do?</h2>
+
+        <p>
+            Intelligent assistance for your everyday plant-care decisions.
+        </p>
+
+    </div>
+
+
+    <section class="feature-grid">
+
+        <div class="feature">
+
+            <div class="feature-icon">💧</div>
+
+            <h3>Water Recommendation</h3>
+
+            <p>
+                Get estimated watering recommendations based
+                on plant type, soil, sunlight and pot size.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">🌦️</div>
+
+            <h3>Weather Intelligence</h3>
+
+            <p>
+                Weather information can be used to adjust
+                irrigation planning and reduce unnecessary watering.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">📊</div>
+
+            <h3>Smart Analytics</h3>
+
+            <p>
+                Understand water consumption, plant health,
+                efficiency and conservation performance.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">🌱</div>
+
+            <h3>Plant Care Guidance</h3>
+
+            <p>
+                Receive simple care suggestions for different
+                plant types and growing conditions.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">🔔</div>
+
+            <h3>Smart Reminders</h3>
+
+            <p>
+                Keep track of upcoming watering tasks and
+                important plant-care activities.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">♻️</div>
+
+            <h3>Water Conservation</h3>
+
+            <p>
+                Identify opportunities to reduce unnecessary
+                water usage while maintaining plant health.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section class="cta">
+
+        <h2>Ready to Manage Your Plants Smarter?</h2>
+
+        <p>
+            Create an irrigation plan and start monitoring your plants.
+        </p>
+
+        <button onclick="window.location.href='irrigation.html'">
+            Create Irrigation Plan →
+        </button>
+
+    </section>
+
+</div>
+
+
+<footer>
+    © 2026 PlantFlow AI • Smart Plant Irrigation & Water Management
+</footer>
+
+
+<script>
+
+    const chatArea = document.getElementById("chatArea");
+    const questionInput = document.getElementById("question");
+
+
+    function getCurrentTime() {
+
+        const now = new Date();
+
+        return now.toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit"
+        });
+
+    }
+
+
+    function addUserMessage(text) {
+
+        const message = document.createElement("div");
+
+        message.className = "message user";
+
+        message.innerHTML = `
+            <div class="bubble">
+                ${escapeHTML(text)}
+                <span class="time">${getCurrentTime()}</span>
+            </div>
+
+            <div class="small-avatar">👤</div>
+        `;
+
+        chatArea.appendChild(message);
+
+        chatArea.scrollTop = chatArea.scrollHeight;
+    }
+
+
+    function addBotMessage(text) {
+
+        const message = document.createElement("div");
+
+        message.className = "message";
+
+        message.innerHTML = `
+            <div class="small-avatar">🤖</div>
+
+            <div class="bubble">
+                ${text}
+                <span class="time">${getCurrentTime()}</span>
+            </div>
+        `;
+
+        chatArea.appendChild(message);
+
+        chatArea.scrollTop = chatArea.scrollHeight;
+    }
+
+
+    function getAIResponse(question) {
+
+        const q = question.toLowerCase();
+
+
+        if (
+            q.includes("tomato") ||
+            q.includes("vegetable")
+        ) {
+
+            return `
+                🍅 <b>Tomato Watering Tip</b><br><br>
+                Tomatoes generally need consistent moisture.
+                Avoid keeping the soil completely dry or
+                continuously waterlogged.<br><br>
+                For this demo system, a medium tomato plant
+                starts around <b>400 ml</b> per watering cycle.
+            `;
+
+        }
+
+
+        if (
+            q.includes("rose") ||
+            q.includes("flower")
+        ) {
+
+            return `
+                🌹 <b>Rose Care</b><br><br>
+                Roses prefer consistent watering with good
+                soil drainage.<br><br>
+                PlantFlow's demo plan uses approximately
+                <b>250 ml</b> for a standard rose profile.
+            `;
+
+        }
+
+
+        if (
+            q.includes("water") &&
+            (
+                q.includes("save") ||
+                q.includes("saving") ||
+                q.includes("reduce")
+            )
+        ) {
+
+            return `
+                💧 <b>Water Saving Suggestions</b><br><br>
+                ✓ Avoid unnecessary watering<br>
+                ✓ Check soil moisture before watering<br>
+                ✓ Prefer morning or evening<br>
+                ✓ Use Smart Water Saving Mode<br>
+                ✓ Track usage in Analytics
+            `;
+
+        }
+
+
+        if (
+            q.includes("health") ||
+            q.includes("sick") ||
+            q.includes("weak")
+        ) {
+
+            return `
+                🌿 <b>Plant Health</b><br><br>
+                Check sunlight, soil condition, watering
+                frequency and recent irrigation history.<br><br>
+                In PlantFlow AI, a lower health score can
+                indicate that the plant needs closer monitoring.
+            `;
+
+        }
+
+
+        if (
+            q.includes("time") ||
+            q.includes("when") ||
+            q.includes("water my")
+        ) {
+
+            return `
+                🕐 <b>Recommended Watering Time</b><br><br>
+                Morning and evening are commonly preferred
+                because they can reduce evaporation compared
+                with hot daytime conditions.<br><br>
+                Your demo schedule currently focuses mainly
+                on evening watering.
+            `;
+
+        }
+
+
+        if (
+            q.includes("irrigation") ||
+            q.includes("watering plan")
+        ) {
+
+            return `
+                ⚙️ <b>Smart Irrigation</b><br><br>
+                PlantFlow AI considers plant type, soil,
+                sunlight, plant condition and pot size to
+                generate a personalized irrigation plan.
+            `;
+
+        }
+
+
+        if (
+            q.includes("analytics") ||
+            q.includes("usage")
+        ) {
+
+            return `
+                📊 <b>Water Analytics</b><br><br>
+                Analytics lets you monitor water usage,
+                water savings, plant health and irrigation
+                efficiency over time.
+            `;
+
+        }
+
+
+        if (
+            q.includes("hello") ||
+            q.includes("hi") ||
+            q.includes("hey")
+        ) {
+
+            return `
+                👋 Hello! I'm ready to help.<br><br>
+                Ask me about <b>watering, plants,
+                irrigation, health or water saving.</b>
+            `;
+
+        }
+
+
+        return `
+            🤖 I can help you with:<br><br>
+            🌱 Plant care<br>
+            💧 Water recommendations<br>
+            ⚙️ Smart irrigation<br>
+            📊 Water analytics<br>
+            ♻️ Water conservation<br><br>
+            Try asking one of these topics.
+        `;
+
+    }
+
+
+    function sendQuestion() {
+
+        const question = questionInput.value.trim();
+
+        if (!question) return;
+
+        addUserMessage(question);
+
+        questionInput.value = "";
+
+        setTimeout(() => {
+
+            const response = getAIResponse(question);
+
+            addBotMessage(response);
+
+        }, 600);
+
+    }
+
+
+    function askSuggested(question) {
+
+        questionInput.value = question;
+
+        sendQuestion();
+
+    }
+
+
+    function handleEnter(event) {
+
+        if (event.key === "Enter") {
+            sendQuestion();
+        }
+
+    }
+
+
+    function escapeHTML(text) {
+
+        const div = document.createElement("div");
+
+        div.textContent = text;
+
+        return div.innerHTML;
+
+    }
+
+</script>
+
+</body>
+</html>
+

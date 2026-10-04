@@ -1,0 +1,687 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | PlantFlow AI</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        body {
+            background: #06150d;
+            color: #f4fff7;
+        }
+
+        header {
+            height: 75px;
+            padding: 0 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            background: rgba(6,21,13,0.96);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            color: #69f09b;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
+            color: #aebdb3;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: #69f09b;
+        }
+
+        .profile {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #69f09b;
+            color: #06150d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        /* HERO */
+
+        .hero {
+            text-align: center;
+            padding: 80px 7% 55px;
+            background:
+                radial-gradient(
+                    circle at top,
+                    rgba(105,240,155,0.13),
+                    transparent 45%
+                );
+        }
+
+        .badge {
+            display: inline-block;
+            color: #69f09b;
+            border: 1px solid rgba(105,240,155,0.3);
+            padding: 7px 15px;
+            border-radius: 30px;
+            font-size: 12px;
+            letter-spacing: 1px;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .hero h1 span {
+            color: #69f09b;
+        }
+
+        .hero p {
+            max-width: 650px;
+            margin: auto;
+            color: #9eafa4;
+            font-size: 16px;
+        }
+
+        /* MAIN */
+
+        .contact-section {
+            padding: 60px 7% 80px;
+        }
+
+        .contact-grid {
+            max-width: 1100px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 0.8fr 1.2fr;
+            gap: 30px;
+        }
+
+        /* INFO */
+
+        .info-card {
+            background: #0a1e13;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 22px;
+            padding: 35px;
+        }
+
+        .info-card h2 {
+            margin-bottom: 12px;
+        }
+
+        .info-card > p {
+            color: #91a197;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .info-item {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            padding: 17px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            background: rgba(105,240,155,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 21px;
+        }
+
+        .info-item h4 {
+            font-size: 14px;
+            margin-bottom: 3px;
+        }
+
+        .info-item p {
+            color: #829187;
+            font-size: 13px;
+        }
+
+        /* FORM */
+
+        .form-card {
+            background: #0a1e13;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 22px;
+            padding: 35px;
+        }
+
+        .form-card h2 {
+            margin-bottom: 8px;
+        }
+
+        .form-card > p {
+            color: #91a197;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .input-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            color: #c7d4cc;
+            margin-bottom: 7px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 13px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: #07180e;
+            color: white;
+            outline: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #69f09b;
+            box-shadow: 0 0 0 3px rgba(105,240,155,0.08);
+        }
+
+        textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        select option {
+            background: #07180e;
+        }
+
+        .send-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #69f09b;
+            color: #06150d;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .send-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(105,240,155,0.2);
+        }
+
+        /* SUCCESS */
+
+        .success-message {
+            display: none;
+            margin-top: 18px;
+            padding: 14px;
+            border-radius: 10px;
+            background: rgba(105,240,155,0.1);
+            border: 1px solid rgba(105,240,155,0.25);
+            color: #69f09b;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        /* FAQ */
+
+        .faq-section {
+            padding: 60px 7% 80px;
+            background: rgba(255,255,255,0.015);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .section-title h2 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .section-title p {
+            color: #91a197;
+        }
+
+        .faq-grid {
+            max-width: 950px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .faq {
+            padding: 22px;
+            border-radius: 15px;
+            background: #0a1e13;
+            border: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .faq h3 {
+            font-size: 15px;
+            margin-bottom: 8px;
+            color: #eaffef;
+        }
+
+        .faq p {
+            font-size: 13px;
+            color: #829187;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 1px solid rgba(255,255,255,0.07);
+            color: #708078;
+            font-size: 13px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 850px) {
+
+            nav {
+                display: none;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            header {
+                padding: 0 5%;
+            }
+
+            .hero {
+                padding: 65px 5% 45px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .contact-section,
+            .faq-section {
+                padding-left: 5%;
+                padding-right: 5%;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .info-card,
+            .form-card {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">🌱 PlantFlow AI</div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="plants.html">My Plants</a>
+        <a href="irrigation.html">Irrigation</a>
+        <a href="analytics.html">Analytics</a>
+        <a href="weather.html">Weather</a>
+        <a href="assistant.html">AI Assistant</a>
+        <a href="help.html">Help</a>
+        <a href="about.html">About</a>
+        <a href="contact.html" class="active">Contact</a>
+        <a href="notifications.html">🔔 Notifications</a>
+        <a href="settings.html">⚙️ Settings</a>
+    </nav>
+
+    <a href="profile.html" class="profile">S</a>
+
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="badge">PLANTFLOW AI SUPPORT</div>
+
+    <h1>
+        Let's <span>Grow Together.</span>
+    </h1>
+
+    <p>
+        Have a question, suggestion, or feedback?
+        Send us a message and connect with the PlantFlow AI team.
+    </p>
+
+</section>
+
+
+<!-- CONTACT -->
+
+<section class="contact-section">
+
+    <div class="contact-grid">
+
+        <!-- CONTACT INFORMATION -->
+
+        <div class="info-card">
+
+            <h2>Get in Touch 🌿</h2>
+
+            <p>
+                We are always interested in your ideas,
+                suggestions and feedback about smart plant management.
+            </p>
+
+            <div class="info-item">
+
+                <div class="info-icon">📧</div>
+
+                <div>
+                    <h4>Email Support</h4>
+                    <p>support@plantflowai.com</p>
+                </div>
+
+            </div>
+
+            <div class="info-item">
+
+                <div class="info-icon">🌱</div>
+
+                <div>
+                    <h4>Project</h4>
+                    <p>PlantFlow AI</p>
+                </div>
+
+            </div>
+
+            <div class="info-item">
+
+                <div class="info-icon">💻</div>
+
+                <div>
+                    <h4>Platform</h4>
+                    <p>Web-Based Smart System</p>
+                </div>
+
+            </div>
+
+            <div class="info-item">
+
+                <div class="info-icon">⚡</div>
+
+                <div>
+                    <h4>Response</h4>
+                    <p>Usually within 24 hours</p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FORM -->
+
+        <div class="form-card">
+
+            <h2>Send a Message</h2>
+
+            <p>
+                Fill in the form below and submit your message.
+            </p>
+
+            <form id="contactForm">
+
+                <div class="form-row">
+
+                    <div class="input-group">
+
+                        <label for="name">Full Name</label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            placeholder="Enter your name"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="input-group">
+
+                        <label for="email">Email Address</label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="Enter your email"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label for="subject">Subject</label>
+
+                    <select id="subject" required>
+
+                        <option value="">Select a subject</option>
+                        <option>General Question</option>
+                        <option>Plant Management</option>
+                        <option>Irrigation Recommendation</option>
+                        <option>Analytics Issue</option>
+                        <option>Technical Support</option>
+                        <option>Feedback</option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label for="message">Your Message</label>
+
+                    <textarea
+                        id="message"
+                        placeholder="Write your message here..."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <button type="submit" class="send-btn">
+                    Send Message →
+                </button>
+
+                <div class="success-message" id="successMessage">
+                    ✅ Message submitted successfully!
+                    Thank you for contacting PlantFlow AI.
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FAQ -->
+
+<section class="faq-section">
+
+    <div class="section-title">
+
+        <h2>Quick Help</h2>
+
+        <p>
+            Common questions about PlantFlow AI
+        </p>
+
+    </div>
+
+
+    <div class="faq-grid">
+
+        <div class="faq">
+
+            <h3>🌱 Do I need sensors?</h3>
+
+            <p>
+                No. PlantFlow AI is designed as a web-based
+                system and does not require physical sensors.
+            </p>
+
+        </div>
+
+
+        <div class="faq">
+
+            <h3>💧 How is water calculated?</h3>
+
+            <p>
+                The system considers plant type, soil,
+                sunlight, condition and pot size.
+            </p>
+
+        </div>
+
+
+        <div class="faq">
+
+            <h3>📊 Can I track water usage?</h3>
+
+            <p>
+                Yes. The Analytics page displays water usage,
+                savings and plant performance.
+            </p>
+
+        </div>
+
+
+        <div class="faq">
+
+            <h3>🌤️ Can weather data be added?</h3>
+
+            <p>
+                Yes. A weather API can be integrated later
+                to improve irrigation recommendations.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<footer>
+    © 2026 PlantFlow AI • Smart Web-Based Plant Management System
+</footer>
+
+
+<script>
+
+    const contactForm = document.getElementById("contactForm");
+    const successMessage = document.getElementById("successMessage");
+
+    contactForm.addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const subject = document.getElementById("subject").value;
+        const message = document.getElementById("message").value.trim();
+
+        if (!name || !email || !subject || !message) {
+            alert("Please fill all the fields.");
+            return;
+        }
+
+        successMessage.style.display = "block";
+
+        contactForm.reset();
+
+        setTimeout(function() {
+            successMessage.style.display = "none";
+        }, 5000);
+
+    });
+
+</script>
+
+</body>
+</html>
+

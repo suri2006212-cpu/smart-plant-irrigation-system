@@ -1,0 +1,697 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | PlantFlow AI</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        body {
+            background: #06150d;
+            color: #f4fff7;
+            line-height: 1.6;
+        }
+
+        header {
+            height: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            background: rgba(6,21,13,0.95);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            color: #69f09b;
+        }
+
+        nav {
+            display: flex;
+            gap: 28px;
+        }
+
+        nav a {
+            color: #b9c8be;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: #69f09b;
+        }
+
+        .profile {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #69f09b;
+            color: #06150d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        /* HERO */
+
+        .hero {
+            padding: 90px 7% 70px;
+            text-align: center;
+            background:
+                radial-gradient(circle at top, rgba(105,240,155,0.12), transparent 45%);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 7px 15px;
+            border: 1px solid rgba(105,240,155,0.3);
+            border-radius: 30px;
+            color: #69f09b;
+            font-size: 12px;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 span {
+            color: #69f09b;
+        }
+
+        .hero p {
+            max-width: 700px;
+            margin: auto;
+            color: #aebdb3;
+            font-size: 17px;
+        }
+
+        /* SECTION */
+
+        section {
+            padding: 70px 7%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .section-title h2 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: #91a197;
+        }
+
+        /* ABOUT */
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 35px;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 34px;
+            margin-bottom: 18px;
+        }
+
+        .about-text h2 span {
+            color: #69f09b;
+        }
+
+        .about-text p {
+            color: #aebdb3;
+            margin-bottom: 15px;
+        }
+
+        .highlight-box {
+            background: linear-gradient(
+                145deg,
+                rgba(105,240,155,0.12),
+                rgba(255,255,255,0.03)
+            );
+            border: 1px solid rgba(105,240,155,0.18);
+            padding: 35px;
+            border-radius: 22px;
+        }
+
+        .highlight-box .icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .highlight-box h3 {
+            color: #69f09b;
+            margin-bottom: 10px;
+        }
+
+        .highlight-box p {
+            color: #aebdb3;
+        }
+
+        /* HOW IT WORKS */
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .step {
+            background: #0b2115;
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 28px 22px;
+            border-radius: 18px;
+            position: relative;
+            transition: 0.3s;
+        }
+
+        .step:hover {
+            transform: translateY(-7px);
+            border-color: rgba(105,240,155,0.35);
+        }
+
+        .number {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #69f09b;
+            color: #06150d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        .step h3 {
+            margin-bottom: 8px;
+        }
+
+        .step p {
+            color: #91a197;
+            font-size: 14px;
+        }
+
+        /* TECHNOLOGY */
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 18px;
+        }
+
+        .tech-card {
+            text-align: center;
+            background: #0b2115;
+            padding: 25px 15px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .tech-card .tech-icon {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .tech-card h3 {
+            font-size: 15px;
+        }
+
+        .tech-card p {
+            font-size: 12px;
+            color: #829187;
+            margin-top: 5px;
+        }
+
+        /* BENEFITS */
+
+        .benefits {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .benefit {
+            padding: 30px;
+            background: rgba(255,255,255,0.025);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 18px;
+        }
+
+        .benefit-icon {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .benefit h3 {
+            margin-bottom: 8px;
+        }
+
+        .benefit p {
+            color: #91a197;
+            font-size: 14px;
+        }
+
+        /* NO SENSOR */
+
+        .sensor-section {
+            background: linear-gradient(
+                120deg,
+                rgba(105,240,155,0.08),
+                transparent
+            );
+        }
+
+        .sensor-box {
+            max-width: 900px;
+            margin: auto;
+            padding: 45px;
+            border-radius: 25px;
+            text-align: center;
+            border: 1px solid rgba(105,240,155,0.2);
+            background: #0a1e13;
+        }
+
+        .sensor-box .big-icon {
+            font-size: 55px;
+            margin-bottom: 15px;
+        }
+
+        .sensor-box h2 {
+            margin-bottom: 12px;
+        }
+
+        .sensor-box h2 span {
+            color: #69f09b;
+        }
+
+        .sensor-box p {
+            color: #9eafa4;
+            max-width: 650px;
+            margin: auto;
+        }
+
+        /* CTA */
+
+        .cta {
+            text-align: center;
+            padding: 80px 7%;
+        }
+
+        .cta h2 {
+            font-size: 38px;
+            margin-bottom: 12px;
+        }
+
+        .cta p {
+            color: #91a197;
+            margin-bottom: 25px;
+        }
+
+        .cta button {
+            border: none;
+            background: #69f09b;
+            color: #06150d;
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        .cta button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(105,240,155,0.2);
+        }
+
+        /* FOOTER */
+
+        footer {
+            padding: 30px 7%;
+            border-top: 1px solid rgba(255,255,255,0.07);
+            text-align: center;
+            color: #708078;
+            font-size: 13px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 1000px) {
+            .steps {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .tech-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .benefits {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 750px) {
+            header {
+                padding: 0 5%;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .hero {
+                padding: 70px 5%;
+            }
+
+            .hero h1 {
+                font-size: 38px;
+            }
+
+            section {
+                padding: 55px 5%;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .steps,
+            .tech-grid,
+            .benefits {
+                grid-template-columns: 1fr;
+            }
+
+            .cta h2 {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🌱 PlantFlow AI</div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="plants.html">My Plants</a>
+        <a href="irrigation.html">Irrigation</a>
+        <a href="analytics.html">Analytics</a>
+        <a href="weather.html">Weather</a>
+        <a href="assistant.html">AI Assistant</a>
+        <a href="help.html">Help</a>
+        <a href="about.html" class="active">About</a>
+        <a href="contact.html" class="active">Contact</a>
+        <a href="notifications.html">🔔 Notifications</a>
+        <a href="settings.html">⚙️ Settings</a>
+    </nav>
+
+    <a href="profile.html" class="profile">S</a>
+</header>
+
+
+<!-- HERO -->
+
+<div class="hero">
+    <div class="badge">ABOUT PLANTFLOW AI</div>
+
+    <h1>
+        Smarter Watering.<br>
+        <span>Healthier Plants.</span>
+    </h1>
+
+    <p>
+        PlantFlow AI is a web-based smart plant management platform
+        designed to help users plan irrigation, monitor plant health,
+        and reduce unnecessary water usage.
+    </p>
+</div>
+
+
+<!-- ABOUT -->
+
+<section>
+    <div class="about-grid">
+
+        <div class="about-text">
+            <h2>
+                What is <span>PlantFlow AI?</span>
+            </h2>
+
+            <p>
+                PlantFlow AI is a modern web application that provides
+                intelligent plant watering recommendations based on
+                plant type, soil condition, sunlight, plant condition,
+                and pot size.
+            </p>
+
+            <p>
+                Instead of following the same watering routine for every
+                plant, the system creates a personalized irrigation plan
+                for different plants.
+            </p>
+
+            <p>
+                The main goal is simple:
+                <strong>use the right amount of water at the right time.</strong>
+            </p>
+        </div>
+
+        <div class="highlight-box">
+            <div class="icon">🌿</div>
+
+            <h3>Our Mission</h3>
+
+            <p>
+                To make plant care easier, smarter, and more
+                water-efficient through a simple web-based
+                intelligent management system.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- HOW IT WORKS -->
+
+<section>
+    <div class="section-title">
+        <h2>How PlantFlow AI Works</h2>
+        <p>A simple four-step smart plant management process</p>
+    </div>
+
+    <div class="steps">
+
+        <div class="step">
+            <div class="number">01</div>
+            <h3>Add Plant</h3>
+            <p>
+                Enter your plant details such as plant type,
+                soil type and pot size.
+            </p>
+        </div>
+
+        <div class="step">
+            <div class="number">02</div>
+            <h3>Analyze Conditions</h3>
+            <p>
+                The system evaluates sunlight, soil and
+                plant condition information.
+            </p>
+        </div>
+
+        <div class="step">
+            <div class="number">03</div>
+            <h3>Generate Plan</h3>
+            <p>
+                PlantFlow AI calculates a suitable water
+                quantity and watering schedule.
+            </p>
+        </div>
+
+        <div class="step">
+            <div class="number">04</div>
+            <h3>Track Results</h3>
+            <p>
+                Monitor water usage, plant health and
+                conservation performance.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- TECHNOLOGY -->
+
+<section>
+    <div class="section-title">
+        <h2>Technology Behind PlantFlow AI</h2>
+        <p>Built with modern web development technologies</p>
+    </div>
+
+    <div class="tech-grid">
+
+        <div class="tech-card">
+            <div class="tech-icon">🌐</div>
+            <h3>HTML5</h3>
+            <p>Web structure</p>
+        </div>
+
+        <div class="tech-card">
+            <div class="tech-icon">🎨</div>
+            <h3>CSS3</h3>
+            <p>Modern UI design</p>
+        </div>
+
+        <div class="tech-card">
+            <div class="tech-icon">⚡</div>
+            <h3>JavaScript</h3>
+            <p>Smart interactions</p>
+        </div>
+
+        <div class="tech-card">
+            <div class="tech-icon">☁️</div>
+            <h3>Weather API</h3>
+            <p>Weather intelligence</p>
+        </div>
+
+        <div class="tech-card">
+            <div class="tech-icon">🗄️</div>
+            <h3>MySQL</h3>
+            <p>Future data storage</p>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- BENEFITS -->
+
+<section>
+    <div class="section-title">
+        <h2>Why PlantFlow AI?</h2>
+        <p>Designed to make everyday plant care easier</p>
+    </div>
+
+    <div class="benefits">
+
+        <div class="benefit">
+            <div class="benefit-icon">💧</div>
+            <h3>Water Conservation</h3>
+            <p>
+                Helps avoid unnecessary watering by
+                creating personalized irrigation plans.
+            </p>
+        </div>
+
+        <div class="benefit">
+            <div class="benefit-icon">🌱</div>
+            <h3>Better Plant Care</h3>
+            <p>
+                Different plants can receive different
+                watering recommendations.
+            </p>
+        </div>
+
+        <div class="benefit">
+            <div class="benefit-icon">📊</div>
+            <h3>Useful Analytics</h3>
+            <p>
+                View water usage, savings and plant
+                performance through visual analytics.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- NO SENSOR -->
+
+<section class="sensor-section">
+
+    <div class="sensor-box">
+
+        <div class="big-icon">💻🌱</div>
+
+        <h2>
+            Smart System with
+            <span>No Sensors Required</span>
+        </h2>
+
+        <p>
+            PlantFlow AI is designed as a web-based smart irrigation
+            solution. It does not require Arduino boards, soil moisture
+            sensors, or other physical hardware. Users can enter plant
+            conditions through the website and receive intelligent
+            watering recommendations.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- CTA -->
+
+<div class="cta">
+
+    <h2>Ready to manage your plants smarter?</h2>
+
+    <p>
+        Explore your personalized PlantFlow AI dashboard.
+    </p>
+
+    <button onclick="openDashboard()">
+        Open Dashboard →
+    </button>
+
+</div>
+
+
+<footer>
+    © 2026 PlantFlow AI • Smart Web-Based Plant Management System
+</footer>
+
+
+<script>
+
+function openDashboard() {
+    window.location.href = "dashboard.html";
+}
+
+</script>
+
+</body>
+</html>
+
